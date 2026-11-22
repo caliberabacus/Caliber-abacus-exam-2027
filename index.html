@@ -1,1 +1,104 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Caliber Abacus Exam 2027</title><style>body{font-family:Arial;margin:0;background:#FFF7ED}.top{background:#FF6B00;color:#fff;padding:14px;text-align:center}.top h1{margin:0;font-size:22px}.top p{margin:4px;font-size:13px}.box{background:#fff;margin:10px;padding:14px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.08)}input{width:90%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px}.btn{display:block;background:#FF6B00;color:#fff;text-align:center;padding:12px;border-radius:10px;font-weight:800;text-decoration:none;margin-top:10px}.btn2{background:#1AAB00}.pal{display:flex;gap:6px;flex-wrap:wrap}.pal button{width:36px;height:36px;border-radius:50%;border:1px solid #ccc;background:#fff}.pal .cur{outline:3px solid #111827}.pal .done{background:#FFD400;border:2px solid #111827}</style></head><body><div class="top"><h1>CALIBER ABACUS</h1><p>Exam 2027 | Online Exam</p></div><div class="box" id="login"><h2>Student Login</h2><input id="name" placeholder="Student Name"><input id="roll" placeholder="Roll Number"><a class="btn" href="javascript:void(0)" onclick="start()">START EXAM</a></div><div class="box" id="exam" style="display:none"><p><b id="timer">Time: 20:00</b> | <b id="qno"></b></p><div><b id="qtext"></b><br><input id="ans" placeholder="Enter Answer" type="number"></div><div class="pal" id="pal"></div><a class="btn" href="javascript:void(0)" onclick="next()">NEXT / SAVE</a><a class="btn btn2" href="javascript:void(0)" onclick="finish()">SUBMIT EXAM</a></div><div class="box" id="result" style="display:none"><h2>Result</h2><p id="rtext"></p><a class="btn" href="javascript:void(0)" onclick="location.reload()">RESTART</a></div><script>let Q=[],C=[],U=[],cur=0,t=20*60;for(let i=0;i<20;i++){let a=Math.floor(Math.random()*80)+10,b=Math.floor(Math.random()*40)+10;Q.push(a+" + "+b+" = ?");C.push(a+b)}function start(){if(!name.value||!roll.value){alert("Enter Name & Roll");return}login.style.display="none";exam.style.display="block";show();setInterval(()=>{t--;let m=Math.floor(t/60),s=t%60;timer.innerText="Time: "+m+":"+(s<10?"0":"")+s;if(t<=0)finish()},1000)}function show(){qno.innerText="Q "+(cur+1)+"/20";qtext.innerText="Q"+(cur+1)+". "+Q[cur];ans.value=U[cur]||"";pal.innerHTML="";for(let i=0;i<20;i++){let b=document.createElement("button");b.innerText=i+1;if(i==cur)b.className="cur";if(U[i]!=null)b.className+=" done";b.onclick=(()=>{let k=i;return()=>{save();cur=k;show()}})();pal.appendChild(b)}}function save(){if(ans.value!="")U[cur]=Number(ans.value)}function next(){save();if(cur<19){cur++;show()}}function finish(){save();let c=0;for(let i=0;i<20;i++)if(U[i]==C[i])c++;exam.style.display="none";result.style.display="block";rtext.innerHTML=name.value+" ("+roll.value+")<br>Score: "+c+"/20<br>"+(c>=10?"PASS - Super!":"Try Again!")}</script></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CALIBER ABACUS - Exam 2027</title>
+<style>
+body{margin:0;font-family:Arial;background:#FFF7ED}
+.header{background:#FF6B00;color:white;text-align:center;padding:20px}
+.header h1{margin:0;font-size:28px}
+.box{background:white;margin:20px;padding:20px;border-radius:15px;box-shadow:0 2px 10px #ddd}
+input{width:100%;padding:14px;margin:10px 0;border:1.5px solid #ddd;border-radius:10px;font-size:17px;box-sizing:border-box}
+button{width:100%;padding:15px;background:#FF6B00;color:white;border:none;border-radius:10px;font-size:19px;font-weight:bold;cursor:pointer}
+.qbox{background:white;margin:15px;padding:18px;border-radius:15px}
+.opt{border:1.5px solid #ddd;padding:12px;margin:8px 0;border-radius:10px;cursor:pointer}
+.opt.sel{background:#FFE0B2;border-color:#FF6B00}
+.numBtn{display:inline-block;width:40px;height:40px;line-height:40px;text-align:center;background:#eee;margin:3px;border-radius:8px;cursor:pointer}
+.numBtn.done{background:#FF6B00;color:white}
+</style>
+</head>
+<body>
+<div class="header"><h1>CALIBER ABACUS</h1><p>Exam 2027 | Online Exam</p></div>
+<div id="loginDiv" class="box">
+<h2>Student Login</h2>
+<input type="text" id="studentName" placeholder="Student Name">
+<input type="text" id="rollNumber" placeholder="Roll Number">
+<input type="text" id="passCode" placeholder="Password">
+<button onclick="startExam()">START EXAM</button>
+<p style="text-align:center;color:#888;font-size:13px">Password: KSK 2013</p>
+</div>
+<div id="examDiv" style="display:none">
+<div class="box"><b id="info"></b> | Time: <b id="timer">20:00</b></div>
+<div class="box" id="qNums"></div>
+<div class="qbox"><h3 id="qText"></h3><div id="opts"></div>
+<button onclick="prevQ()">PREVIOUS</button><br><br>
+<button onclick="nextQ()">NEXT</button><br><br>
+<button onclick="submitExam()" style="background:green">SUBMIT EXAM</button>
+</div></div>
+<div id="resultDiv" class="box" style="display:none;text-align:center">
+<h2>Result</h2><h1 id="score"></h1><p id="rInfo"></p>
+<button onclick="location.reload()">LOGOUT</button></div>
+<script>
+let qs=[
+["23 + 45 = ?","68","66","78","58",0],
+["56 - 12 = ?","44","42","46","40",0],
+["12 + 34 + 11 = ?","57","55","67","47",0],
+["78 - 23 = ?","55","53","65","45",0],
+["15 + 25 = ?","40","30","50","35",0],
+["99 - 11 = ?","88","78","98","89",0],
+["34 + 16 = ?","50","40","60","44",0],
+["67 - 17 = ?","50","40","60","52",0],
+["11 + 22 + 33 = ?","66","55","77","60",0],
+["80 - 30 = ?","50","40","60","30",0],
+["45 + 14 = ?","59","49","69","58",0],
+["90 - 45 = ?","45","40","50","35",0],
+["25 + 25 = ?","50","40","60","45",0],
+["60 - 15 = ?","45","35","55","40",0],
+["18 + 12 = ?","30","28","32","20",0],
+["72 - 22 = ?","50","40","60","52",0],
+["33 + 33 = ?","66","55","77","60",0],
+["100 - 25 = ?","75","65","85","70",0],
+["14 + 26 = ?","40","30","50","38",0],
+["55 - 5 = ?","50","40","60","45",0]
+];
+let cur=0, ans=new Array(20).fill(-1), name="", roll="", time=20*60, timerInt;
+function startExam(){
+  name=document.getElementById("studentName").value.trim();
+  roll=document.getElementById("rollNumber").value.trim();
+  let pass=document.getElementById("passCode").value.trim();
+  if(name=="" || roll==""){ alert("Enter Name & Roll"); return; }
+  if(pass != "KSK 2013"){ alert("Wrong Password! Password is KSK 2013"); return; }
+  document.getElementById("loginDiv").style.display="none";
+  document.getElementById("examDiv").style.display="block";
+  document.getElementById("info").innerText=name+" | Roll: "+roll;
+  showNums(); showQ();
+  timerInt=setInterval(()=>{
+    time--; let m=Math.floor(time/60), s=time%60;
+    document.getElementById("timer").innerText=m+":"+(s<10?"0"+s:s);
+    if(time<=0){ clearInterval(timerInt); submitExam(); }
+  },1000);
+}
+function showNums(){
+  let h=""; for(let i=0;i<20;i++){ h+=`<span class="numBtn ${ans[i]!=-1?'done':''}" onclick="goQ(${i})">${i+1}</span>`; }
+  document.getElementById("qNums").innerHTML=h;
+}
+function goQ(i){ cur=i; showQ(); }
+function showQ(){
+  document.getElementById("qText").innerText="Q "+(cur+1)+". "+qs[cur][0];
+  let h=""; for(let i=1;i<=4;i++){ h+=`<div class="opt ${ans[cur]==i-1?'sel':''}" onclick="selectOpt(${i-1})">${qs[cur][i]}</div>`; }
+  document.getElementById("opts").innerHTML=h; showNums();
+}
+function selectOpt(i){ ans[cur]=i; showQ(); }
+function nextQ(){ if(cur<19){cur++; showQ();} }
+function prevQ(){ if(cur>0){cur--; showQ();} }
+function submitExam(){
+  clearInterval(timerInt);
+  let score=0; for(let i=0;i<20;i++){ if(ans[i]==qs[i][5]) score++; }
+  document.getElementById("examDiv").style.display="none";
+  document.getElementById("resultDiv").style.display="block";
+  document.getElementById("score").innerText=score+" / 20";
+  document.getElementById("rInfo").innerText=name+" | Roll: "+roll+" | Marks: "+score;
+}
+</script>
+</body>
+</html>
