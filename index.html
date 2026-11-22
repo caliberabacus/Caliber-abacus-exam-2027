@@ -2,103 +2,165 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CALIBER ABACUS - Exam 2027</title>
+<title>CALIBER ABACUS - MUMBAI</title>
 <style>
 body{margin:0;font-family:Arial;background:#FFF7ED}
-.header{background:#FF6B00;color:white;text-align:center;padding:20px}
-.header h1{margin:0;font-size:28px}
-.box{background:white;margin:20px;padding:20px;border-radius:15px;box-shadow:0 2px 10px #ddd}
-input{width:100%;padding:14px;margin:10px 0;border:1.5px solid #ddd;border-radius:10px;font-size:17px;box-sizing:border-box}
-button{width:100%;padding:15px;background:#FF6B00;color:white;border:none;border-radius:10px;font-size:19px;font-weight:bold;cursor:pointer}
-.qbox{background:white;margin:15px;padding:18px;border-radius:15px}
+.head{background:#0F2040;color:white;text-align:center;padding:18px}
+.head h1{margin:0;font-size:26px}
+.yellow{background:#FFD500;padding:14px;text-align:center;font-weight:bold;line-height:1.6}
+.box{background:white;margin:15px;padding:18px;border-radius:14px;box-shadow:0 2px 10px #ddd}
+input,select{width:100%;padding:13px;margin:8px 0;border:1.5px solid #ddd;border-radius:10px;font-size:16px;box-sizing:border-box}
+button{width:100%;padding:14px;background:#00A651;color:white;border:none;border-radius:10px;font-size:18px;font-weight:bold;cursor:pointer;margin-top:8px}
 .opt{border:1.5px solid #ddd;padding:12px;margin:8px 0;border-radius:10px;cursor:pointer}
 .opt.sel{background:#FFE0B2;border-color:#FF6B00}
-.numBtn{display:inline-block;width:40px;height:40px;line-height:40px;text-align:center;background:#eee;margin:3px;border-radius:8px;cursor:pointer}
+.numBtn{display:inline-block;width:38px;height:38px;line-height:38px;text-align:center;background:#eee;margin:3px;border-radius:8px;cursor:pointer;font-size:14px}
 .numBtn.done{background:#FF6B00;color:white}
+video{width:100%;border-radius:10px;background:black}
 </style>
 </head>
 <body>
-<div class="header"><h1>CALIBER ABACUS</h1><p>Exam 2027 | Online Exam</p></div>
+<div class="head"><h1>🧮 CALIBER ABACUS - MUMBAI</h1><p>122 Students - 6 Levels x 11 Exams = 66 Exams<br>FACE CAMERA ON - Face Kanipinchali!<br>KID to L3 = 10 Min | L4, L5 = 12 Min<br>Final: Student ID Only | Result: KSK / 2013</p></div>
+<div class="yellow">
+📅 DEMO: 8 Nov 2027 - 5:00 AM to 19 Nov 2027 - 11:59 PM<br>
+🔒 FINAL EXAM: 21 Nov 2027 - 7:00 AM - Sharp!<br>
+⏰ Ippudu: <span id="now"></span><br>
+<span id="status"></span>
+</div>
 <div id="loginDiv" class="box">
-<h2>Student Login</h2>
-<input type="text" id="studentName" placeholder="Student Name">
-<input type="text" id="rollNumber" placeholder="Roll Number">
-<input type="text" id="passCode" placeholder="Password">
-<button onclick="startExam()">START EXAM</button>
-<p style="text-align:center;color:#888;font-size:13px">Password: KSK 2013</p>
+<h2>👤 Student Login</h2>
+<p>Mee User ID ye Password kuda!<br>Example: ID: <b>KSK0001</b> / Password: <b>KSK0001</b></p>
+<input id="uid" placeholder="User ID - Ex: KSK0001">
+<input id="pwd" placeholder="Password - Same ID - Ex: KSK0001" type="password">
+<button onclick="login()">🔓 Login - Na Exam Chudu</button>
+<div style="background:#EAF2FF;padding:12px;border-radius:10px;margin-top:10px"><b>Test: ID: KSK0001 / Pass: KSK0001 - U. Lakshmi Sahana - KID</b></div>
+<button onclick="showTeacher()" style="background:#0F2040">👩‍🏫 Teacher - Student Create + Result + Time Report (ashu / 1220)</button>
+</div>
+<div id="teacherDiv" class="box" style="display:none">
+<h2>Teacher Login</h2>
+<input id="tuser" placeholder="Teacher ID - ashu">
+<input id="tpass" placeholder="Password - 1220" type="password">
+<button onclick="teacherLogin()">Teacher Login</button>
+<div id="teacherPanel" style="display:none">
+<h3>Add Student</h3>
+<input id="newName" placeholder="Student Name">
+<input id="newId" placeholder="New ID Ex: KSK0002">
+<select id="newLevel"><option>KID</option><option>L1</option><option>L2</option><option>L3</option><option>L4</option><option>L5</option></select>
+<button onclick="addStudent()">Add Student</button>
+<h3>Students List</h3><div id="stuList"></div>
+<h3>Results</h3><div id="resList"></div>
+<button onclick="backToLogin()">Back to Login</button>
+</div></div>
+<div id="examListDiv" class="box" style="display:none">
+<h2 id="welcome"></h2>
+<p>Level: <b id="myLevel"></b> | Camera ON Cheyandi!</p>
+<video id="cam" autoplay playsinline muted></video>
+<button onclick="startCam()">📷 Camera ON Cheyandi</button>
+<h3>Select Exam - 11 Exams</h3><div id="examBtns"></div>
+<button onclick="logout()" style="background:#666">Logout</button>
 </div>
 <div id="examDiv" style="display:none">
-<div class="box"><b id="info"></b> | Time: <b id="timer">20:00</b></div>
-<div class="box" id="qNums"></div>
-<div class="qbox"><h3 id="qText"></h3><div id="opts"></div>
-<button onclick="prevQ()">PREVIOUS</button><br><br>
-<button onclick="nextQ()">NEXT</button><br><br>
-<button onclick="submitExam()" style="background:green">SUBMIT EXAM</button>
-</div></div>
+<div class="box"><b id="info"></b> | Time: <b id="timer"></b> | Q: <span id="qCount"></span></div>
+<div class="box" id="qNums" style="max-height:120px;overflow:auto"></div>
+<div class="box"><h3 id="qText"></h3><div id="opts"></div>
+<button onclick="prevQ()">PREVIOUS</button><button onclick="nextQ()">NEXT</button>
+<button onclick="submitExam()" style="background:green">SUBMIT EXAM</button></div>
+</div>
 <div id="resultDiv" class="box" style="display:none;text-align:center">
 <h2>Result</h2><h1 id="score"></h1><p id="rInfo"></p>
+<p>Result Code: KSK / 2013 - Teacher ki Cheppandi</p>
 <button onclick="location.reload()">LOGOUT</button></div>
 <script>
-let qs=[
-["23 + 45 = ?","68","66","78","58",0],
-["56 - 12 = ?","44","42","46","40",0],
-["12 + 34 + 11 = ?","57","55","67","47",0],
-["78 - 23 = ?","55","53","65","45",0],
-["15 + 25 = ?","40","30","50","35",0],
-["99 - 11 = ?","88","78","98","89",0],
-["34 + 16 = ?","50","40","60","44",0],
-["67 - 17 = ?","50","40","60","52",0],
-["11 + 22 + 33 = ?","66","55","77","60",0],
-["80 - 30 = ?","50","40","60","30",0],
-["45 + 14 = ?","59","49","69","58",0],
-["90 - 45 = ?","45","40","50","35",0],
-["25 + 25 = ?","50","40","60","45",0],
-["60 - 15 = ?","45","35","55","40",0],
-["18 + 12 = ?","30","28","32","20",0],
-["72 - 22 = ?","50","40","60","52",0],
-["33 + 33 = ?","66","55","77","60",0],
-["100 - 25 = ?","75","65","85","70",0],
-["14 + 26 = ?","40","30","50","38",0],
-["55 - 5 = ?","50","40","60","45",0]
-];
-let cur=0, ans=new Array(20).fill(-1), name="", roll="", time=20*60, timerInt;
-function startExam(){
-  name=document.getElementById("studentName").value.trim();
-  roll=document.getElementById("rollNumber").value.trim();
-  let pass=document.getElementById("passCode").value.trim();
-  if(name=="" || roll==""){ alert("Enter Name & Roll"); return; }
-  if(pass != "KSK 2013"){ alert("Wrong Password! Password is KSK 2013"); return; }
-  document.getElementById("loginDiv").style.display="none";
-  document.getElementById("examDiv").style.display="block";
-  document.getElementById("info").innerText=name+" | Roll: "+roll;
+let students = JSON.parse(localStorage.getItem('cal_stu')||'{"KSK0001":{"name":"U. Lakshmi Sahana","level":"KID"}}');
+let results = JSON.parse(localStorage.getItem('cal_res')||'[]');
+let curUser=null, curLevel="", curExam="", qs=[], cur=0, ans=[], time=0, timerInt, totalQ=50;
+document.getElementById('now').innerText = new Date().toLocaleString('en-IN');
+function checkStatus(){
+  let n = new Date();
+  let demoStart = new Date('2027-11-08T05:00:00');
+  let demoEnd = new Date('2027-11-19T23:59:00');
+  let finalStart = new Date('2027-11-21T07:00:00');
+  let s = document.getElementById('status');
+  if(n>=demoStart && n<=demoEnd) s.innerText = "✅ DEMO - Open Undhi!";
+  else if(n<demoStart) s.innerText = "🔒 DEMO - 8 Nov 2027 - 5 AM ki Open Avthundhi";
+  else if(n>=finalStart) s.innerText = "✅ FINAL EXAM - Open!";
+  else s.innerText = "🔒 FINAL - 21 Nov 2027 - 7 AM ki Open Avthundhi";
+}
+checkStatus();
+function login(){
+  let id=document.getElementById('uid').value.trim().toUpperCase();
+  let p=document.getElementById('pwd').value.trim().toUpperCase();
+  if(!id||!p){alert('ID & Password Veyandi');return;}
+  if(id!==p){alert('Password = Same ID - Ex: KSK0001');return;}
+  if(!students[id]){alert('ID Ledhu! Teacher ni Adagandi');return;}
+  curUser=id; curLevel=students[id].level;
+  document.getElementById('loginDiv').style.display='none';
+  document.getElementById('examListDiv').style.display='block';
+  document.getElementById('welcome').innerText='Welcome, '+students[id].name+' ('+id+')';
+  document.getElementById('myLevel').innerText=curLevel;
+  let h=''; for(let i=1;i<=10;i++){h+='<button onclick="openExam(\'DEMO '+i+'\')">DEMO '+i+' - '+(curLevel)+'</button>';}
+  h+='<button onclick="openExam(\'FINAL EXAM\')" style="background:#FF6B00">FINAL EXAM - 21 Nov 2027 - 7 AM</button>';
+  document.getElementById('examBtns').innerHTML=h;
+}
+function showTeacher(){document.getElementById('loginDiv').style.display='none';document.getElementById('teacherDiv').style.display='block';}
+function backToLogin(){document.getElementById('teacherDiv').style.display='none';document.getElementById('loginDiv').style.display='block';}
+function teacherLogin(){
+  if(document.getElementById('tuser').value.trim()=='ashu' && document.getElementById('tpass').value.trim()=='1220'){
+    document.getElementById('teacherPanel').style.display='block'; renderTeacher();
+  } else alert('Wrong Teacher ID / Password');
+}
+function addStudent(){
+  let n=document.getElementById('newName').value.trim(); let id=document.getElementById('newId').value.trim().toUpperCase(); let lv=document.getElementById('newLevel').value;
+  if(!n||!id){alert('Name & ID Veyandi');return;}
+  students[id]={name:n,level:lv}; localStorage.setItem('cal_stu',JSON.stringify(students)); renderTeacher(); alert('Added '+id);
+}
+function renderTeacher(){
+  let h=''; for(let k in students){h+=k+' - '+students[k].name+' - '+students[k].level+'<br>';} document.getElementById('stuList').innerHTML=h;
+  let r=''; results.forEach(x=>{r+=x.id+' | '+x.name+' | '+x.exam+' | '+x.score+'/'+x.total+' | '+x.time+'<br>';}); document.getElementById('resList').innerHTML=r||'No Results Yet';
+}
+async function startCam(){ try{ let s=await navigator.mediaDevices.getUserMedia({video:true}); document.getElementById('cam').srcObject=s; }catch(e){alert('Camera Allow Cheyandi! Face Kanipinchali!');} }
+function genQs(){
+  qs=[]; ans=[];
+  let isHigh = (curLevel=='L4'||curLevel=='L5');
+  totalQ = isHigh ? 100 : 50;
+  time = isHigh ? 12*60 : 10*60;
+  let max = curLevel=='KID'?20 : curLevel=='L1'?50 : curLevel=='L2'?100 : curLevel=='L3'?200 : 500;
+  for(let i=0;i<totalQ;i++){
+    let a=Math.floor(Math.random()*max)+1, b=Math.floor(Math.random()*max)+1, isAdd=Math.random()>0.4;
+    let correct = isAdd ? a+b : Math.max(a,b)-Math.min(a,b);
+    let q = isAdd ? a+' + '+b+' = ?' : Math.max(a,b)+' - '+Math.min(a,b)+' = ?';
+    let opts=new Set([correct]); while(opts.size<4){opts.add(correct+Math.floor(Math.random()*11)-5);}
+    let arr=[...opts]; arr=arr.filter(x=>x>=0); while(arr.length<4){arr.push(correct+arr.length+2);}
+    let correctIdx=arr.indexOf(correct);
+    qs.push([q, ...arr, correctIdx]); ans.push(-1);
+  }
+}
+function openExam(exam){
+  curExam=exam; genQs(); cur=0;
+  document.getElementById('examListDiv').style.display='none';
+  document.getElementById('examDiv').style.display='block';
+  document.getElementById('info').innerText=curUser+' | '+curLevel+' | '+exam;
+  document.getElementById('qCount').innerText=totalQ+' Questions';
+  document.getElementById('timer').innerText=Math.floor(time/60)+':00';
   showNums(); showQ();
-  timerInt=setInterval(()=>{
-    time--; let m=Math.floor(time/60), s=time%60;
-    document.getElementById("timer").innerText=m+":"+(s<10?"0"+s:s);
-    if(time<=0){ clearInterval(timerInt); submitExam(); }
-  },1000);
-}
-function showNums(){
-  let h=""; for(let i=0;i<20;i++){ h+=`<span class="numBtn ${ans[i]!=-1?'done':''}" onclick="goQ(${i})">${i+1}</span>`; }
-  document.getElementById("qNums").innerHTML=h;
-}
-function goQ(i){ cur=i; showQ(); }
-function showQ(){
-  document.getElementById("qText").innerText="Q "+(cur+1)+". "+qs[cur][0];
-  let h=""; for(let i=1;i<=4;i++){ h+=`<div class="opt ${ans[cur]==i-1?'sel':''}" onclick="selectOpt(${i-1})">${qs[cur][i]}</div>`; }
-  document.getElementById("opts").innerHTML=h; showNums();
-}
-function selectOpt(i){ ans[cur]=i; showQ(); }
-function nextQ(){ if(cur<19){cur++; showQ();} }
-function prevQ(){ if(cur>0){cur--; showQ();} }
-function submitExam(){
   clearInterval(timerInt);
-  let score=0; for(let i=0;i<20;i++){ if(ans[i]==qs[i][5]) score++; }
-  document.getElementById("examDiv").style.display="none";
-  document.getElementById("resultDiv").style.display="block";
-  document.getElementById("score").innerText=score+" / 20";
-  document.getElementById("rInfo").innerText=name+" | Roll: "+roll+" | Marks: "+score;
+  timerInt=setInterval(()=>{time--; let m=Math.floor(time/60), s=time%60; document.getElementById('timer').innerText=m+':'+(s<10?'0'+s:s); if(time<=0){clearInterval(timerInt); submitExam();}},1000);
 }
+function showNums(){let h=''; for(let i=0;i<totalQ;i++){h+='<span class="numBtn '+(ans[i]!=-1?'done':'')+'" onclick="goQ('+i+')">'+(i+1)+'</span>';} document.getElementById('qNums').innerHTML=h;}
+function goQ(i){cur=i; showQ();}
+function showQ(){document.getElementById('qText').innerText='Q '+(cur+1)+'. '+qs[cur][0]; let h=''; for(let i=1;i<=4;i++){h+='<div class="opt '+(ans[cur]==i-1?'sel':'')+'" onclick="selectOpt('+(i-1)+')">'+qs[cur][i]+'</div>';} document.getElementById('opts').innerHTML=h; showNums();}
+function selectOpt(i){ans[cur]=i; showQ();}
+function nextQ(){if(cur<totalQ-1){cur++; showQ();}}
+function prevQ(){if(cur>0){cur--; showQ();}}
+function submitExam(){
+  clearInterval(timerInt); let score=0; for(let i=0;i<totalQ;i++){if(ans[i]==qs[i][5]) score++;}
+  let rec={id:curUser,name:students[curUser].name,exam:curExam,score:score,total:totalQ,time:new Date().toLocaleString('en-IN')};
+  results.push(rec); localStorage.setItem('cal_res',JSON.stringify(results));
+  document.getElementById('examDiv').style.display='none';
+  document.getElementById('resultDiv').style.display='block';
+  document.getElementById('score').innerText=score+' / '+totalQ;
+  document.getElementById('rInfo').innerText=curUser+' | '+students[curUser].name+' | '+curExam+' | Level '+curLevel;
+}
+function logout(){location.reload();}
 </script>
 </body>
 </html>
