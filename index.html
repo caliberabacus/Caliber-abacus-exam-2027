@@ -3,16 +3,17 @@
 <title>CALIBER ABACUS - Exam 2027</title>
 <style>
 *{box-sizing:border-box;font-family:Arial}body{margin:0;background:#fff7ed}
-.top{background:#1e293b;color:#fff;padding:14px;text-align:center}
-.top b{font-size:20px}.top span{font-size:12px;color:#fbbf24}
+.top{background:#1e293b;color:#fff;padding:14px;text-align:center}.top b{font-size:20px}.top span{font-size:12px;color:#fbbf24}
 .card{max-width:520px;margin:14px auto;background:#fff;padding:16px;border-radius:14px;box-shadow:0 4px 14px #0001}
 input{width:100%;padding:13px;margin:8px 0;border:2px solid #ddd;border-radius:10px;font-size:16px}
 button{width:100%;padding:13px;border:0;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer}
-.btn-green{background:#16a34a;color:#fff}.btn-orange{background:#f97316;color:#fff}.btn-dark{background:#1e293b;color:#fff;margin-top:8px}
+.btn-green{background:#16a34a;color:#fff}.btn-orange{background:#f97316;color:#fff}.btn-dark{background:#1e293b;color:#fff;margin-top:8px}.btn-purple{background:#9333ea;color:#fff;margin-top:8px}
 .timer{background:#dc2626;color:#fff;text-align:center;padding:10px;border-radius:10px;font-weight:700}
-.qnums{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}.qnums div{width:32px;height:32px;border-radius:50%;background:#e5e7eb;display:flex;align-items:center;justify-content:center;font-size:13px}
-.qnums .done{background:#22c55e;color:#fff}.qnums .now{border:2px solid #000}
-.qbox{font-size:22px;font-weight:700;margin:14px 0}
+.qnums{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}.qnums div{width:32px;height:32px;border-radius:50%;background:#fecaca;color:#991b1b;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid #fff;cursor:pointer}
+.qnums .done{background:#22c55e;color:#fff}.qnums .review{background:#a855f7;color:#fff}.qnums .now{border:2px solid #000;transform:scale(1.15)}
+.legend{display:flex;gap:8px;font-size:11px;flex-wrap:wrap;margin:6px 0}.legend span{padding:4px 8px;border-radius:20px;color:#fff;font-weight:700}
+.qbox{background:#fefce8;border:2px solid #facc15;border-radius:12px;padding:16px;text-align:center;margin:14px 0}
+.qbox pre{font-size:34px;line-height:1.35;margin:0;font-weight:700}
 #cam{position:fixed;top:8px;right:8px;width:82px;height:82px;border-radius:50%;border:3px solid #facc15;object-fit:cover;z-index:99;background:#000;display:none}
 #camLabel{position:fixed;top:92px;right:8px;font-size:10px;background:#16a34a;color:#fff;padding:2px 6px;border-radius:20px;z-index:99;display:none}
 .level{padding:14px;border-radius:12px;margin:8px 0;color:#fff;font-weight:700;cursor:pointer}
@@ -20,103 +21,52 @@ button{width:100%;padding:13px;border:0;border-radius:10px;font-size:16px;font-w
 </style></head><body>
 <video id="cam" autoplay muted playsinline></video><div id="camLabel">● CAM ON</div>
 <div class="top"><b>🧮 CALIBER ABACUS</b><br><span>ALL Exams - One Link | KID to LEVEL 5</span></div>
-
-<!-- LOGIN -->
-<div class="card" id="loginBox">
-<h2 style="text-align:center;margin:4px">Login</h2>
-<p style="text-align:center;font-size:13px;color:#666">Student ID = Password</p>
-<input id="u" placeholder="Username - Ex: NV0001">
-<input id="p" type="password" placeholder="Password - Ex: NV0001">
-<button class="btn-green" onclick="login()">Login →</button>
-<p class="small">Demo: NV0001 / NV0001 &nbsp;|&nbsp; Teacher: KSK / 2013<br>NV5001 / NV5001 - Level 5</p>
-</div>
-
-<!-- LEVELS -->
-<div class="card hidden" id="levelBox">
-<h3 id="welcome"></h3>
-<p style="font-size:13px;color:#666">Level Select Cheyandi - Demo 50 Qs - Final 50 Qs</p>
-<div id="levels"></div>
-<button class="btn-dark" onclick="logout()">Logout</button>
-</div>
-
-<!-- EXAM -->
-<div class="card hidden" id="examBox">
-<div class="timer" id="timer"></div>
-<div class="qnums" id="qnums"></div>
-<div class="qbox" id="qtext"></div>
-<input id="ans" inputmode="numeric" placeholder="Answer - Number Only">
-<button class="btn-green" onclick="saveNext()">Save & Next →</button>
-<button class="btn-orange" style="margin-top:8px" onclick="submitExam()">✅ Submit</button>
-<button class="btn-dark" onclick="backLevels()">← Back to All Levels</button>
-<p class="small" id="result"></p>
-</div>
-
+<div class="card" id="loginBox"><h2 style="text-align:center;margin:4px">Login</h2><p style="text-align:center;font-size:13px;color:#666">Student ID = Password</p><input id="u" placeholder="Username - Ex: NV0001"><input id="p" type="password" placeholder="Password - Ex: NV0001"><button class="btn-green" onclick="login()">Login →</button><p class="small">Demo: NV0001 / NV0001 | Teacher: KSK / 2013</p></div>
+<div class="card hidden" id="levelBox"><h3 id="welcome"></h3><div id="levels"></div><button class="btn-dark" onclick="logout()">Logout</button></div>
+<div class="card hidden" id="examBox"><div class="timer" id="timer"></div>
+<div class="legend"><span style="background:#22c55e">● Answered</span><span style="background:#ef4444">● Not Answered</span><span style="background:#a855f7">● Review</span></div>
+<div class="qnums" id="qnums"></div><div class="qbox"><pre id="qtext"></pre></div><input id="ans" inputmode="numeric" placeholder="Answer - Number Only"><button class="btn-green" onclick="saveNext()">Save & Next →</button><button class="btn-purple" onclick="markReview()">🟣 Mark as Review</button><button class="btn-orange" style="margin-top:8px" onclick="submitExam()">✅ Submit</button><button class="btn-dark" onclick="backLevels()">← Back to All Levels</button><p class="small" id="result"></p></div>
 <script>
 let users={"NV0001":"U.LAKSHMI SAHANA","NV0002":"K.MAANVI","NV0003":"K.POORNA VAISHNAVI","NV5001":"B.ABHINAV","KSK":"TEACHER - KSK"};
-let curUser="",curLevel="",qs=[],idx=0,answers={},timerInt=null,left=0;
-function login(){
- let u=document.getElementById('u').value.trim().toUpperCase();
- let p=document.getElementById('p').value.trim();
- if((u==="KSK"&&p==="2013")||(users[u]&&p===u)){
-  curUser=u; document.getElementById('loginBox').classList.add('hidden');
-  document.getElementById('levelBox').classList.remove('hidden');
-  document.getElementById('welcome').innerText="Welcome "+users[u]+" - "+(u==="KSK"?"TEACHER":u);
-  showLevels();
- } else alert("Wrong Username / Password!");
-}
+let qs=[],idx=0,answers={},reviewSet=new Set(),timerInt=null,left=0,curLevel="";
+function login(){let u=document.getElementById('u').value.trim().toUpperCase();let p=document.getElementById('p').value.trim();if((u==="KSK"&&p==="2013")||(users[u]&&p===u)){document.getElementById('loginBox').classList.add('hidden');document.getElementById('levelBox').classList.remove('hidden');document.getElementById('welcome').innerText="Welcome "+users[u];showLevels();}else alert("Wrong Username / Password!");}
 function logout(){location.reload()}
-function showLevels(){
- let lv=[["KID","KID LEVEL - 50 Qs - 10 Min","#22c55e"],["LEVEL 1","LEVEL 1 - 50 Qs - 10 Min","#16a34a"],["LEVEL 2","LEVEL 2 - 50 Qs - 10 Min","#2563eb"],["LEVEL 3","LEVEL 3 - 50 Qs - 10 Min","#f59e0b"],["LEVEL 4","LEVEL 4 - 50 Qs - 12 Min","#ef4444"],["LEVEL 5","LEVEL 5 - 50 Qs - 12 Min","#9333ea"]];
- document.getElementById('levels').innerHTML=lv.map(x=>`<div class="level" style="background:${x[2]}" onclick="startExam('${x[0]}')">${x[1]} →</div>`).join('');
-}
+function showLevels(){let lv=[["KID","KID LEVEL - 50 Qs - 10 Min - 4 Numbers Vertical","#22c55e"],["LEVEL 1","LEVEL 1 - 50 Qs - 10 Min","#16a34a"],["LEVEL 2","LEVEL 2 - 50 Qs - 10 Min","#2563eb"],["LEVEL 3","LEVEL 3 - 50 Qs - 10 Min","#f59e0b"],["LEVEL 4","LEVEL 4 - 50 Qs - 12 Min","#ef4444"],["LEVEL 5","LEVEL 5 - 50 Qs - 12 Min","#9333ea"]];document.getElementById('levels').innerHTML=lv.map(x=>`<div class="level" style="background:${x[2]}" onclick="startExam('${x[0]}')">${x[1]} →</div>`).join('');}
+function rnd(n){return Math.floor(Math.random()*n)+1}
 function genQs(level){
  let set=new Set(),arr=[];
- let max=level==="KID"?10:level==="LEVEL 1"?20:level==="LEVEL 2"?50:level==="LEVEL 3"?100:200;
  while(arr.length<50){
-  let a=Math.floor(Math.random()*max)+1, b=Math.floor(Math.random()*max)+1, c=Math.floor(Math.random()*9)+1;
-  let q,ans;
-  if(level==="KID"){q=`${a} + ${b} = ?`; ans=a+b;}
-  else if(level==="LEVEL 1"){q=`${a} + ${b} + ${c} = ?`; ans=a+b+c;}
-  else if(level==="LEVEL 2"){q=`${a} + ${b} - ${c} = ?`; ans=a+b-c;}
-  else if(level==="LEVEL 3"){q=`${a} + ${b} + ${c} - ${a} = ?`; ans=b+c;}
-  else {q=`${a} x ${c} + ${b} = ?`; ans=a*c+b;}
-  let key=q; if(set.has(key)) continue; set.add(key); arr.push({q,ans});
+  let lines=[],total=0,key="",count=4,max=9;
+  if(level==="KID"){count=4;max=9;} else if(level==="LEVEL 1"){count=4;max=20;} else if(level==="LEVEL 2"){count=4;max=50;} else if(level==="LEVEL 3"){count=4;max=99;} else {count=3;max=99;}
+  let first=rnd(max); if(level==="KID") first=5+rnd(5);
+  total=first; lines.push(`  ${first}`);
+  for(let i=1;i<count;i++){let isMinus=Math.random()<0.35;let n=rnd(max);if(level==="KID") n=rnd(9);if(isMinus){if(n>total) n=rnd(Math.max(1,total));if(n===0) n=1;total-=n;lines.push(`- ${n}`);}else{total+=n;lines.push(`  ${n}`);}}
+  key=lines.join(","); if(set.has(key)) continue; set.add(key); arr.push({lines,ans:total});
  }
  return arr;
 }
-function startExam(level){
- curLevel=level; qs=genQs(level); idx=0; answers={};
- left=(level==="LEVEL 4"||level==="LEVEL 5")?12*60:10*60;
- document.getElementById('levelBox').classList.add('hidden');
- document.getElementById('examBox').classList.remove('hidden');
- document.getElementById('result').innerText="";
- startCamera(); render(); startTimer();
-}
-function startCamera(){
- let v=document.getElementById('cam');
- v.style.display="block"; document.getElementById('camLabel').style.display="block";
- if(navigator.mediaDevices) navigator.mediaDevices.getUserMedia({video:true}).then(s=>v.srcObject=s).catch(e=>{});
-}
+function startExam(level){curLevel=level;qs=genQs(level);idx=0;answers={};reviewSet=new Set();left=(level==="LEVEL 4"||level==="LEVEL 5")?12*60:10*60;document.getElementById('levelBox').classList.add('hidden');document.getElementById('examBox').classList.remove('hidden');document.getElementById('result').innerText="";startCamera();render();startTimer();}
+function startCamera(){let v=document.getElementById('cam');v.style.display="block";document.getElementById('camLabel').style.display="block";if(navigator.mediaDevices) navigator.mediaDevices.getUserMedia({video:true}).then(s=>v.srcObject=s).catch(e=>{});}
 function render(){
- document.getElementById('qnums').innerHTML=qs.map((_,i)=>`<div class="${answers[i]!=null?'done':''} ${i===idx?'now':''}" onclick="goQ(${i})">${i+1}</div>`).join('');
- document.getElementById('qtext').innerText=`Q${idx+1}: ${qs[idx].q}`;
+ document.getElementById('qnums').innerHTML=qs.map((_,i)=>{
+  let cls=""; if(reviewSet.has(i)) cls="review"; else if(answers[i]!=null&&answers[i]!=="") cls="done";
+  // Default = Red (Not Answered), Green = Answered, Purple = Review
+  return `<div class="${cls} ${i===idx?'now':''}" onclick="goQ(${i})">${i+1}</div>`;
+ }).join('');
+ document.getElementById('qtext').innerText=`Q${idx+1}\n${qs[idx].lines.join("\n")}\n─────\n  ?`;
  document.getElementById('ans').value=answers[idx]??""; document.getElementById('ans').focus();
 }
-function goQ(i){saveAns(); idx=i; render();}
-function saveAns(){let v=document.getElementById('ans').value.trim(); if(v!=="") answers[idx]=v;}
-function saveNext(){saveAns(); if(idx<49){idx++; render();} else alert("Last Question - Submit nokkandi!");}
-function startTimer(){
- clearInterval(timerInt);
- timerInt=setInterval(()=>{left--; let m=Math.floor(left/60), s=left%60;
-  document.getElementById('timer').innerText=`⏰ Time Left: ${m}:${s<10?'0':''}${s} - ${curLevel} - Total 50`;
-  if(left<=0){clearInterval(timerInt); submitExam(true);}
- },1000);
+function goQ(i){saveAns();idx=i;render();}
+function saveAns(){let v=document.getElementById('ans').value.trim();if(v!=="")answers[idx]=v;else delete answers[idx];}
+function saveNext(){saveAns();if(reviewSet.has(idx)) reviewSet.delete(idx); if(idx<49){idx++;render();}else alert("Last Question - Submit nokkandi!");}
+function markReview(){
+ saveAns();
+ if(reviewSet.has(idx)){reviewSet.delete(idx); alert("Review nunchi theesesanu");}
+ else {reviewSet.add(idx); alert("Q"+(idx+1)+" - Review lo mark chesanu 🟣");}
+ render();
+ if(idx<49){idx++; render();}
 }
-function submitExam(auto=false){
- saveAns(); clearInterval(timerInt);
- let correct=0; qs.forEach((q,i)=>{if(parseInt(answers[i])===q.ans) correct++;});
- document.getElementById('result').innerHTML=`🎉 ${auto?"Time Aypoyindhi! ":""} Result: ${correct} / 50 - ${correct>=35?"PASS ✅":"Try Again"}`;
- alert(`Result: ${correct} / 50`);
-}
-function backLevels(){clearInterval(timerInt); document.getElementById('cam').style.display="none"; document.getElementById('camLabel').style.display="none"; document.getElementById('examBox').classList.add('hidden'); document.getElementById('levelBox').classList.remove('hidden');}
+function startTimer(){clearInterval(timerInt);timerInt=setInterval(()=>{left--;let m=Math.floor(left/60),s=left%60;document.getElementById('timer').innerText=`⏰ Time Left: ${m}:${s<10?'0':''}${s} - ${curLevel} - Total 50`;if(left<=0){clearInterval(timerInt);submitExam(true);}},1000);}
+function submitExam(auto=false){saveAns();clearInterval(timerInt);let c=0;qs.forEach((q,i)=>{if(parseInt(answers[i])===q.ans)c++;});document.getElementById('result').innerHTML=`🎉 Result: ${c} / 50 - ${c>=35?"PASS ✅":"Try Again"}`;alert(`Result: ${c} / 50`);}
+function backLevels(){clearInterval(timerInt);document.getElementById('cam').style.display="none";document.getElementById('camLabel').style.display="none";document.getElementById('examBox').classList.add('hidden');document.getElementById('levelBox').classList.remove('hidden');}
 </script></body></html>
