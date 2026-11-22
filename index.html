@@ -13,10 +13,17 @@ button{border:0;border-radius:6px;font-weight:700;cursor:pointer}
 .qnums .done{background:#22c55e;color:#fff}.qnums .review{background:#a855f7;color:#fff}.qnums .now{border:2px solid #000}
 .legend{display:flex;gap:6px;font-size:10px}.legend span{padding:2px 6px;border-radius:12px;color:#fff;font-weight:700}
 .exam-main{display:flex;gap:8px;margin-top:8px}
-/* NUMBERS - MOBILE KEYBOARD LAGA CLEAR GA */
-.qbox{width:92px;min-height:210px;border:1.5px solid #000;background:#ffffff;display:flex;align-items:center;justify-content:center;text-align:center;flex-shrink:0;border-radius:4px}
-.qbox pre{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;font-size:42px;line-height:1.3;margin:0;font-weight:800;color:#000;letter-spacing:1px;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
-.qbox.horizontal{width:160px}.qbox.horizontal pre{font-size:28px;line-height:1.3}
+/* DTP WORK STYLE - PERFECT COLUMN */
+.qbox{width:125px;min-height:215px;border:1.5px solid #000;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;border-radius:2px;padding:8px}
+.qbox-inner{width:100%}
+.dtp-row{display:flex;justify-content:flex-end;align-items:center;height:40px}
+.dtp-cell{width:34px;text-align:center;font-family:'Courier New',Courier,monospace;font-size:38px;font-weight:800;color:#000;line-height:1}
+.dtp-cell.sign{width:26px;font-size:34px}
+.dtp-cell.empty{width:34px}
+.dtp-line{border-top:2.5px solid #000;margin:4px 0;height:2px}
+.dtp-ans{display:flex;justify-content:flex-end;height:36px;align-items:center}
+.dtp-ans .dtp-cell{color:#999}
+.qbox.horizontal{width:175px}.qbox.horizontal .dtp-h{font-family:'Courier New',monospace;font-size:27px;font-weight:800;text-align:center;line-height:1.4}
 .right{flex:1;display:flex;flex-direction:column;gap:8px}
 .keypad{border:1px solid #ddd;padding:8px;background:#fff;border-radius:6px;width:195px;margin:0 auto}
 .keypad .khead{background:#eee;text-align:center;font-size:12px;padding:4px;font-weight:700}
@@ -44,7 +51,7 @@ button{border:0;border-radius:6px;font-weight:700;cursor:pointer}
 <div style="font-size:12px;margin:4px 0">Question Type: NAT<br><b id="qNo">Question No. 1</b> <span id="totalQ" style="color:#666"></span></div>
 
 <div class="exam-main">
-  <div class="qbox" id="qbox"><pre id="qtext"></pre></div>
+  <div class="qbox" id="qbox"><div class="qbox-inner" id="qtext"></div></div>
   <div class="right">
     <input id="ans" readonly placeholder="Answer">
     <div class="keypad">
@@ -75,53 +82,6 @@ let users={"NV0001":"U.LAKSHMI SAHANA","NV0002":"K.MAANVI","NV0003":"K.POORNA VA
 let qs=[],idx=0,answers={},reviewSet=new Set(),timerInt=null,left=0,curLevel="";
 function login(){let u=document.getElementById('u').value.trim().toUpperCase();let p=document.getElementById('p').value.trim();if((u==="KSK"&&p==="2013")||(users[u]&&p===u)){document.getElementById('loginBox').classList.add('hidden');document.getElementById('levelBox').classList.remove('hidden');document.getElementById('welcome').innerText="Welcome "+users[u];showLevels();}else alert("Wrong Username / Password!");}
 function logout(){location.reload()}
-function showLevels(){let lv=[["KID","KID LEVEL - 50 Qs - 10 Min - + / -","#22c55e"],["LEVEL 1","LEVEL 1 - 100 Qs - 10 Min - + / -","#16a34a"],["LEVEL 2","LEVEL 2 - 100 Qs - 10 Min - + / -","#2563eb"],["LEVEL 3","LEVEL 3 - 100 Qs - 10 Min - + / -","#f59e0b"],["LEVEL 4","LEVEL 4 - 150 Qs - 12 Min - + - ×","#ef4444"],["LEVEL 5","LEVEL 5 - 150 Qs - 12 Min - + - × ÷","#9333ea"]];document.getElementById('levels').innerHTML=lv.map(x=>`<div class="level" style="background:${x[2]}" onclick="startExam('${x[0]}')">${x[1]} →</div>`).join('');}
+function showLevels(){let lv=[["KID","KID - 50 Qs - 10 Min - 4 Rows Single Digit","#22c55e"],["LEVEL 1","LEVEL 1 - 100 Qs - 10 Min - 6 Rows Single Digit","#16a34a"],["LEVEL 2","LEVEL 2 - 100 Qs - 10 Min - 4 Rows Double Digit","#2563eb"],["LEVEL 3","LEVEL 3 - 100 Qs - 10 Min - 4 Rows Double Digit","#f59e0b"],["LEVEL 4","LEVEL 4 - 150 Qs - 12 Min - 100 +- 4 Rows + 50 Mult 43x6","#ef4444"],["LEVEL 5","LEVEL 5 - 150 Qs - 12 Min - 100 +- 5 Rows + 25 Mult 243x5 + 25 Div 145/5","#9333ea"]];document.getElementById('levels').innerHTML=lv.map(x=>`<div class="level" style="background:${x[2]}" onclick="startExam('${x[0]}')">${x[1]} →</div>`).join('');}
 function rnd(n){return Math.floor(Math.random()*n)+1}
-function getTotal(level){if(level==="KID")return 50; if(level==="LEVEL 1"||level==="LEVEL 2"||level==="LEVEL 3")return 100; return 150;}
-function getTime(level){if(level==="LEVEL 4"||level==="LEVEL 5")return 12*60; return 10*60;}
-function genOneVertical(level){
- let lines=[],total=0,max=9; if(level==="KID")max=9; else if(level==="LEVEL 1")max=20; else if(level==="LEVEL 2")max=50; else max=99;
- let first=rnd(max); if(level==="KID") first=5+rnd(5); total=first; lines.push(`${first}`);
- for(let i=1;i<4;i++){let isMinus=Math.random()<0.35;let n=rnd(max);if(level==="KID") n=rnd(9);if(isMinus){if(n>total) n=rnd(Math.max(1,total));if(n===0) n=1;total-=n;lines.push(`-${n}`);}else{total+=n;lines.push(`${n}`);}}
- return {lines,ans:total,isHorizontal:false};
-}
-function genQs(level){
- let totalQ=getTotal(level),set=new Set(),arr=[];
- while(arr.length<totalQ){
-  let q;
-  if(level==="LEVEL 4"){
-   if(Math.random()<0.5){q=genOneVertical(level);}
-   else {let a=2+rnd(8), b=2+rnd(9); q={lines:[`${a} x ${b}`],ans:a*b,isHorizontal:true};}
-  } else if(level==="LEVEL 5"){
-   let r=Math.random();
-   if(r<0.34){q=genOneVertical(level);}
-   else if(r<0.67){let a=2+rnd(8), b=2+rnd(9); q={lines:[`${a} x ${b}`],ans:a*b,isHorizontal:true};}
-   else {let b=2+rnd(8), ans=2+rnd(9), a=b*ans; q={lines:[`${a} ÷ ${b}`],ans:ans,isHorizontal:true};}
-  } else { q=genOneVertical(level); }
-  let key=q.lines.join(","); if(set.has(key)) continue; set.add(key); arr.push(q);
- }
- return arr;
-}
-function startExam(level){curLevel=level;qs=genQs(level);idx=0;answers={};reviewSet=new Set();left=getTime(level);document.getElementById('loginBox').classList.add('hidden');document.getElementById('levelBox').classList.add('hidden');document.getElementById('examBox').classList.remove('hidden');document.getElementById('examTitle').innerText="Final NOV 2026 - "+level;document.getElementById('secLabel').innerText=level;document.getElementById('result').innerText="";startCamera();render();startTimer();}
-function startCamera(){let v=document.getElementById('cam');v.style.display="block";document.getElementById('camLabel').style.display="block";if(navigator.mediaDevices) navigator.mediaDevices.getUserMedia({video:true}).then(s=>v.srcObject=s).catch(e=>{});}
-function render(){
- document.getElementById('qnums').innerHTML=qs.map((_,i)=>{let cls="";if(reviewSet.has(i))cls="review";else if(answers[i]!=null&&answers[i]!=="")cls="done";return `<div class="${cls} ${i===idx?'now':''}" onclick="goQ(${i})">${i+1}</div>`;}).join('');
- document.getElementById('qNo').innerText="Question No. "+(idx+1);
- document.getElementById('totalQ').innerText=" / Total: "+qs.length;
- let q=qs[idx];
- document.getElementById('qbox').className="qbox"+(q.isHorizontal?" horizontal":"");
- document.getElementById('qtext').innerText=q.isHorizontal?q.lines[0]+" = ?":q.lines.join("\n");
- document.getElementById('ans').value=answers[idx]??"";
- let el=document.querySelectorAll('.qnums div')[idx]; if(el) el.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});
-}
-function press(d){let a=document.getElementById('ans'); if(a.value.length<5) a.value+=d;}
-function backspace(){let a=document.getElementById('ans'); a.value=a.value.slice(0,-1);}
-function clearAns(){document.getElementById('ans').value=""; delete answers[idx]; render();}
-function goQ(i){saveAns();idx=i;render();}
-function saveAns(){let v=document.getElementById('ans').value.trim();if(v!=="")answers[idx]=v;else delete answers[idx];}
-function saveNext(){saveAns();if(reviewSet.has(idx)) reviewSet.delete(idx); if(idx<qs.length-1){idx++;render();}else alert("Last Question - Submit nokkandi!");}
-function markReview(){saveAns();if(reviewSet.has(idx))reviewSet.delete(idx);else reviewSet.add(idx);render();if(idx<qs.length-1){idx++;render();}}
-function startTimer(){clearInterval(timerInt);timerInt=setInterval(()=>{left--;let m=Math.floor(left/60),s=left%60;document.getElementById('timer').innerText=`Time Left: ${m<10?'0':''}${m}:${s<10?'0':''}${s} - ${curLevel} - Total ${qs.length}`;if(left<=0){clearInterval(timerInt);submitExam(true);}},1000);}
-function submitExam(auto=false){saveAns();clearInterval(timerInt);let c=0;qs.forEach((q,i)=>{if(parseInt(answers[i])===q.ans)c++;});document.getElementById('result').innerHTML=`🎉 Result: ${c} / ${qs.length}`;if(confirm(`Submit cheyala? Result: ${c} / ${qs.length}`)) alert(`Result: ${c} / ${qs.length}`);}
-function backLevels(){clearInterval(timerInt);document.getElementById('cam').style.display="none";document.getElementById('camLabel').style.display="none";document.getElementById('examBox').classList.add('hidden');document.getElementById('levelBox').classList.remove('hidden');}
-</script></body></html>
+function rndRange(min,max){return Math.floor(Math.random
