@@ -1,166 +1,52 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CALIBER ABACUS - MUMBAI</title>
-<style>
-body{margin:0;font-family:Arial;background:#FFF7ED}
-.head{background:#0F2040;color:white;text-align:center;padding:18px}
-.head h1{margin:0;font-size:26px}
-.yellow{background:#FFD500;padding:14px;text-align:center;font-weight:bold;line-height:1.6}
-.box{background:white;margin:15px;padding:18px;border-radius:14px;box-shadow:0 2px 10px #ddd}
-input,select{width:100%;padding:13px;margin:8px 0;border:1.5px solid #ddd;border-radius:10px;font-size:16px;box-sizing:border-box}
-button{width:100%;padding:14px;background:#00A651;color:white;border:none;border-radius:10px;font-size:18px;font-weight:bold;cursor:pointer;margin-top:8px}
-.opt{border:1.5px solid #ddd;padding:12px;margin:8px 0;border-radius:10px;cursor:pointer}
-.opt.sel{background:#FFE0B2;border-color:#FF6B00}
-.numBtn{display:inline-block;width:38px;height:38px;line-height:38px;text-align:center;background:#eee;margin:3px;border-radius:8px;cursor:pointer;font-size:14px}
-.numBtn.done{background:#FF6B00;color:white}
-video{width:100%;border-radius:10px;background:black}
-</style>
-</head>
-<body>
-<div class="head"><h1>🧮 CALIBER ABACUS - MUMBAI</h1><p>122 Students - 6 Levels x 11 Exams = 66 Exams<br>FACE CAMERA ON - Face Kanipinchali!<br>KID to L3 = 10 Min | L4, L5 = 12 Min<br>Final: Student ID Only | Result: KSK / 2013</p></div>
-<div class="yellow">
-📅 DEMO: 8 Nov 2027 - 5:00 AM to 19 Nov 2027 - 11:59 PM<br>
-🔒 FINAL EXAM: 21 Nov 2027 - 7:00 AM - Sharp!<br>
-⏰ Ippudu: <span id="now"></span><br>
-<span id="status"></span>
-</div>
-<div id="loginDiv" class="box">
-<h2>👤 Student Login</h2>
-<p>Mee User ID ye Password kuda!<br>Example: ID: <b>KSK0001</b> / Password: <b>KSK0001</b></p>
-<input id="uid" placeholder="User ID - Ex: KSK0001">
-<input id="pwd" placeholder="Password - Same ID - Ex: KSK0001" type="password">
-<button onclick="login()">🔓 Login - Na Exam Chudu</button>
-<div style="background:#EAF2FF;padding:12px;border-radius:10px;margin-top:10px"><b>Test: ID: KSK0001 / Pass: KSK0001 - U. Lakshmi Sahana - KID</b></div>
-<button onclick="showTeacher()" style="background:#0F2040">👩‍🏫 Teacher - Student Create + Result + Time Report (ashu / 1220)</button>
-</div>
-<div id="teacherDiv" class="box" style="display:none">
-<h2>Teacher Login</h2>
-<input id="tuser" placeholder="Teacher ID - ashu">
-<input id="tpass" placeholder="Password - 1220" type="password">
-<button onclick="teacherLogin()">Teacher Login</button>
-<div id="teacherPanel" style="display:none">
-<h3>Add Student</h3>
-<input id="newName" placeholder="Student Name">
-<input id="newId" placeholder="New ID Ex: KSK0002">
-<select id="newLevel"><option>KID</option><option>L1</option><option>L2</option><option>L3</option><option>L4</option><option>L5</option></select>
-<button onclick="addStudent()">Add Student</button>
-<h3>Students List</h3><div id="stuList"></div>
-<h3>Results</h3><div id="resList"></div>
-<button onclick="backToLogin()">Back to Login</button>
-</div></div>
-<div id="examListDiv" class="box" style="display:none">
-<h2 id="welcome"></h2>
-<p>Level: <b id="myLevel"></b> | Camera ON Cheyandi!</p>
-<video id="cam" autoplay playsinline muted></video>
-<button onclick="startCam()">📷 Camera ON Cheyandi</button>
-<h3>Select Exam - 11 Exams</h3><div id="examBtns"></div>
-<button onclick="logout()" style="background:#666">Logout</button>
-</div>
-<div id="examDiv" style="display:none">
-<div class="box"><b id="info"></b> | Time: <b id="timer"></b> | Q: <span id="qCount"></span></div>
-<div class="box" id="qNums" style="max-height:120px;overflow:auto"></div>
-<div class="box"><h3 id="qText"></h3><div id="opts"></div>
-<button onclick="prevQ()">PREVIOUS</button><button onclick="nextQ()">NEXT</button>
-<button onclick="submitExam()" style="background:green">SUBMIT EXAM</button></div>
-</div>
-<div id="resultDiv" class="box" style="display:none;text-align:center">
-<h2>Result</h2><h1 id="score"></h1><p id="rInfo"></p>
-<p>Result Code: KSK / 2013 - Teacher ki Cheppandi</p>
-<button onclick="location.reload()">LOGOUT</button></div>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>CALIBER ABACUS - Exam 2027 | KID to Level 5</title>
+<style>*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}body{background:#0a1a4d;color:#111}.hidden{display:none!important}.topbar{background:#fff;padding:14px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}.topbar b{color:#0a1a4d;font-size:20px}.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;background:#0a1a4d}.card{background:#fff;width:100%;max-width:440px;border-radius:22px;padding:28px}.card h1{text-align:center;color:#0a1a4d}.card p{text-align:center;color:#666;font-size:13px;margin:8px 0 18px}.card input{width:100%;padding:15px;border:2.5px solid #dbe2ff;border-radius:12px;margin:6px 0 14px;font-size:17px}.btn{width:100%;padding:15px;border:0;border-radius:12px;background:#00c9a7;color:#fff;font-weight:800;font-size:17px;cursor:pointer}.btn-blue{background:#0a7cff}.btn-outline{background:#fff;color:#0a1a4d;border:2px solid #0a1a4d}.container{max-width:1100px;margin:0 auto;padding:16px}.white{background:#fff;border-radius:16px;padding:18px;margin-bottom:14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:620px){.grid{grid-template-columns:1fr}}.folder{border:2.5px solid #e6eaff;border-radius:16px;padding:20px;cursor:pointer;background:#f8faff}.badge{display:inline-block;background:#ffe9a8;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:800}.badge-green{background:#c8ffd9}.exam-header{background:#111;color:#fff;padding:12px;display:flex;justify-content:space-between;position:sticky;top:0;z-index:20}.qbox{background:#fff;border-radius:16px;padding:20px;margin:14px}.qnums{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;max-height:132px;overflow:auto}.qnum{width:42px;height:42px;border-radius:50%;border:2px solid #ddd;display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:800;background:#fff}.qnum.active{background:#0a7cff!important;color:#fff}.qnum.answered{background:#e6f7ff;border-color:#0a7cff}.qnum.marked{background:#7b2ff7;color:#fff}.num-col{font-size:36px;font-weight:800;text-align:center;line-height:1.35;border:2.5px solid #111;display:inline-block;padding:14px 26px;border-radius:12px;min-width:160px}.mul-box{font-size:38px;font-weight:800;text-align:right;line-height:1.2;border:2.5px solid #111;display:inline-block;padding:14px 28px;border-radius:12px;min-width:180px}.mul-box .line{border-top:3px solid #111;margin:8px 0}.mul-row{display:flex;justify-content:space-between}.div-box{font-size:34px;font-weight:800;text-align:center;border:2.5px solid #111;display:inline-block;padding:14px 26px;border-radius:12px;min-width:180px}.ans-input{width:100%;padding:16px;font-size:26px;font-weight:800;text-align:center;border:2.5px solid #111;border-radius:12px;margin:14px 0}.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;max-width:340px;margin:0 auto}.keypad button{padding:16px;font-size:22px;font-weight:800;border:1px solid #ccc;border-radius:10px;background:#f5f5f5}.flex{display:flex;gap:10px}.flex button{flex:1;padding:14px;border-radius:12px;border:0;font-weight:800;font-size:15px}.cam{position:fixed;right:12px;top:62px;width:118px;height:118px;border-radius:50%;overflow:hidden;border:5px solid #00c9a7;z-index:99;background:#000}.cam video{width:100%;height:100%;object-fit:cover}.cam span{position:absolute;bottom:4px;left:0;right:0;text-align:center;color:#fff;font-size:10px;background:rgba(0,0,0,.6)}.pill{display:inline-block;background:#eef2ff;padding:5px 10px;border-radius:20px;font-size:12px;font-weight:700;margin:3px}table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:11px;border-bottom:1px solid #eee;text-align:left}
+</style></head><body>
+<div id="loginPage" class="login-wrap"><div class="card"><div style="text-align:center;font-size:48px">🧮</div><h1>CALIBER ABACUS</h1><p><b>Full Exam Portal - KID to Level 5</b><br>Enter Your Given Login</p><label>Username</label><input id="uid" placeholder="Ex: NV0001 / NV1001 / KSK / ashu"><label>Password</label><input id="pwd" type="password" placeholder="Same as Username"><button class="btn" onclick="doLogin()">Login</button><div style="font-size:12px;color:#888;text-align:center;margin-top:12px;line-height:1.8"><b>Demo Logins:</b><br>KID: NV0001 | L1: NV1001 | L2: NV2001<br>L3: NV3001 | L4: NV4001 | L5: NV5001<br>Teacher: KSK / 2013 | Result: ashu / 1220<br><b>Password = Same as Username</b></div><p id="loginErr" style="color:red;font-weight:700;text-align:center"></p></div></div>
+<div id="dashPage" class="hidden"><div class="topbar"><b>🧮 CALIBER ABACUS</b><span id="userLabel"></span></div><div class="container"><div class="white"><h2 id="welcomeTitle">Welcome</h2><p id="welcomeSub" style="color:#666;margin-top:6px"></p><div id="studentListBox"></div></div><div id="levelList"></div><div class="white"><button class="btn btn-outline" onclick="logout()">Logout</button></div></div></div>
+<div id="levelPage" class="hidden"><div class="topbar"><b id="levelTitle">Level</b><button onclick="goDash()" style="padding:9px 16px;border-radius:9px;border:1px solid #ddd;background:#fff">← Back</button></div><div class="container"><div class="grid"><div class="folder" onclick="openDemos()"><span class="badge">📁 FOLDER 1</span><h3 style="margin-top:10px">10 DEMOS</h3><p id="demoDesc"></p><p><b>Result: Immediately</b></p></div><div class="folder" onclick="openFinal()"><span class="badge badge-green">📁 FOLDER 2</span><h3 style="margin-top:10px">1 FINAL / MAIN EXAM</h3><p id="finalDesc"></p><p><b>Result: After 10 Hours</b></p><p style="font-size:12px;color:#888">🔒 Main Exam - KSK / 2013 thone open</p></div></div><div class="white" id="demoList"></div><div class="white" id="finalList"></div></div></div>
+<div id="examPage" class="hidden"><div class="exam-header"><b id="examTitle">Exam</b><span id="timer">Time Left : 10:00</span></div><div class="cam" id="camBox"><video id="camVideo" autoplay muted playsinline></video><span>● LIVE - CAMERA</span></div><div class="container"><div class="qbox"><div style="display:flex;justify-content:space-between"><span>Section</span><span>Level <b id="examLevel"></b> | <b id="studentNameExam"></b></span></div><div style="color:#e65100;margin:10px 0;font-weight:800">Question Type NAT</div><div><b>Question No. <span id="qNo">1</span></b> &nbsp; Mark/s: <b>2.00</b> | Negative: <span style="color:red">0.00</span></div><div class="qnums" id="qPalette"></div><div style="text-align:center;margin:16px 0"><div id="qNums"></div></div><input class="ans-input" id="ansBox" placeholder="Type Answer Here" readonly><div class="keypad"><button onclick="pressKey('7')">7</button><button onclick="pressKey('8')">8</button><button onclick="pressKey('9')">9</button><button onclick="pressKey('4')">4</button><button onclick="pressKey('5')">5</button><button onclick="pressKey('6')">6</button><button onclick="pressKey('1')">1</button><button onclick="pressKey('2')">2</button><button onclick="pressKey('3')">3</button><button onclick="pressKey('0')">0</button><button onclick="pressKey('.')">.</button><button onclick="pressKey('-')">-</button><button onclick="backspace()" style="grid-column:span 3;background:#ddd">Backspace</button></div><div class="flex" style="margin-top:15px"><button style="background:#0a7cff;color:#fff" onclick="saveNext()">Save & Next</button><button style="background:#0a7cff;color:#fff" onclick="submitExam()">Submit Exam</button></div><div class="flex" style="margin-top:10px"><button style="background:#eee" onclick="markReview()">Mark for review and Next</button><button style="background:#eee" onclick="clearAns()">Clear Response</button></div></div></div></div>
+<div id="resultPage" class="hidden"><div class="topbar"><b>Result</b><button onclick="goDash()" style="padding:9px 15px;border-radius:8px;border:1px solid #ddd;background:#fff">Home</button></div><div class="container"><div class="white"><h2 id="resTitle">Result</h2><p id="resSub" style="color:#666;margin-top:6px"></p><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center;margin-top:14px"><div style="background:#f8faff;padding:16px;border-radius:12px"><small>Total Score</small><br><b id="rScore">0</b></div><div style="background:#f8faff;padding:16px;border-radius:12px"><small>Attempted</small><br><b id="rAtt">0</b></div><div style="background:#f8faff;padding:16px;border-radius:12px"><small>Accuracy</small><br><b id="rAcc">0%</b></div><div style="background:#f8faff;padding:16px;border-radius:12px"><small>✅ Correct</small><br><b id="rCorr">0</b></div><div style="background:#f8faff;padding:16px;border-radius:12px"><small>❌ Wrong</small><br><b id="rWrong">0</b></div><div style="background:#f8faff;padding:16px;border-radius:12px"><small>⏭️ Leave</small><br><b id="rLeave">0</b></div></div><div id="resDetail" style="margin-top:14px;overflow-x:auto"></div><button class="btn btn-blue" style="margin-top:14px" onclick="goDash()">Back to Dashboard</button></div></div></div>
 <script>
-let students = JSON.parse(localStorage.getItem('cal_stu')||'{"KSK0001":{"name":"U. Lakshmi Sahana","level":"KID"}}');
-let results = JSON.parse(localStorage.getItem('cal_res')||'[]');
-let curUser=null, curLevel="", curExam="", qs=[], cur=0, ans=[], time=0, timerInt, totalQ=50;
-document.getElementById('now').innerText = new Date().toLocaleString('en-IN');
-function checkStatus(){
-  let n = new Date();
-  let demoStart = new Date('2027-11-08T05:00:00');
-  let demoEnd = new Date('2027-11-19T23:59:00');
-  let finalStart = new Date('2027-11-21T07:00:00');
-  let s = document.getElementById('status');
-  if(n>=demoStart && n<=demoEnd) s.innerText = "✅ DEMO - Open Undhi!";
-  else if(n<demoStart) s.innerText = "🔒 DEMO - 8 Nov 2027 - 5 AM ki Open Avthundhi";
-  else if(n>=finalStart) s.innerText = "✅ FINAL EXAM - Open!";
-  else s.innerText = "🔒 FINAL - 21 Nov 2027 - 7 AM ki Open Avthundhi";
-}
-checkStatus();
-function login(){
-  let id=document.getElementById('uid').value.trim().toUpperCase();
-  let p=document.getElementById('pwd').value.trim().toUpperCase();
-  if(!id||!p){alert('ID & Password Veyandi');return;}
-  if(id!==p){alert('Password = Same ID - Ex: KSK0001');return;}
-  if(!students[id]){alert('ID Ledhu! Teacher ni Adagandi');return;}
-  curUser=id; curLevel=students[id].level;
-  document.getElementById('loginDiv').style.display='none';
-  document.getElementById('examListDiv').style.display='block';
-  document.getElementById('welcome').innerText='Welcome, '+students[id].name+' ('+id+')';
-  document.getElementById('myLevel').innerText=curLevel;
-  let h=''; for(let i=1;i<=10;i++){h+='<button onclick="openExam(\'DEMO '+i+'\')">DEMO '+i+' - '+(curLevel)+'</button>';}
-  h+='<button onclick="openExam(\'FINAL EXAM\')" style="background:#FF6B00">FINAL EXAM - 21 Nov 2027 - 7 AM</button>';
-  document.getElementById('examBtns').innerHTML=h;
-}
-function showTeacher(){document.getElementById('loginDiv').style.display='none';document.getElementById('teacherDiv').style.display='block';}
-function backToLogin(){document.getElementById('teacherDiv').style.display='none';document.getElementById('loginDiv').style.display='block';}
-function teacherLogin(){
-  if(document.getElementById('tuser').value.trim()=='ashu' && document.getElementById('tpass').value.trim()=='1220'){
-    document.getElementById('teacherPanel').style.display='block'; renderTeacher();
-  } else alert('Wrong Teacher ID / Password');
-}
-function addStudent(){
-  let n=document.getElementById('newName').value.trim(); let id=document.getElementById('newId').value.trim().toUpperCase(); let lv=document.getElementById('newLevel').value;
-  if(!n||!id){alert('Name & ID Veyandi');return;}
-  students[id]={name:n,level:lv}; localStorage.setItem('cal_stu',JSON.stringify(students)); renderTeacher(); alert('Added '+id);
-}
-function renderTeacher(){
-  let h=''; for(let k in students){h+=k+' - '+students[k].name+' - '+students[k].level+'<br>';} document.getElementById('stuList').innerHTML=h;
-  let r=''; results.forEach(x=>{r+=x.id+' | '+x.name+' | '+x.exam+' | '+x.score+'/'+x.total+' | '+x.time+'<br>';}); document.getElementById('resList').innerHTML=r||'No Results Yet';
-}
-async function startCam(){ try{ let s=await navigator.mediaDevices.getUserMedia({video:true}); document.getElementById('cam').srcObject=s; }catch(e){alert('Camera Allow Cheyandi! Face Kanipinchali!');} }
-function genQs(){
-  qs=[]; ans=[];
-  let isHigh = (curLevel=='L4'||curLevel=='L5');
-  totalQ = isHigh ? 100 : 50;
-  time = isHigh ? 12*60 : 10*60;
-  let max = curLevel=='KID'?20 : curLevel=='L1'?50 : curLevel=='L2'?100 : curLevel=='L3'?200 : 500;
-  for(let i=0;i<totalQ;i++){
-    let a=Math.floor(Math.random()*max)+1, b=Math.floor(Math.random()*max)+1, isAdd=Math.random()>0.4;
-    let correct = isAdd ? a+b : Math.max(a,b)-Math.min(a,b);
-    let q = isAdd ? a+' + '+b+' = ?' : Math.max(a,b)+' - '+Math.min(a,b)+' = ?';
-    let opts=new Set([correct]); while(opts.size<4){opts.add(correct+Math.floor(Math.random()*11)-5);}
-    let arr=[...opts]; arr=arr.filter(x=>x>=0); while(arr.length<4){arr.push(correct+arr.length+2);}
-    let correctIdx=arr.indexOf(correct);
-    qs.push([q, ...arr, correctIdx]); ans.push(-1);
-  }
-}
-function openExam(exam){
-  curExam=exam; genQs(); cur=0;
-  document.getElementById('examListDiv').style.display='none';
-  document.getElementById('examDiv').style.display='block';
-  document.getElementById('info').innerText=curUser+' | '+curLevel+' | '+exam;
-  document.getElementById('qCount').innerText=totalQ+' Questions';
-  document.getElementById('timer').innerText=Math.floor(time/60)+':00';
-  showNums(); showQ();
-  clearInterval(timerInt);
-  timerInt=setInterval(()=>{time--; let m=Math.floor(time/60), s=time%60; document.getElementById('timer').innerText=m+':'+(s<10?'0'+s:s); if(time<=0){clearInterval(timerInt); submitExam();}},1000);
-}
-function showNums(){let h=''; for(let i=0;i<totalQ;i++){h+='<span class="numBtn '+(ans[i]!=-1?'done':'')+'" onclick="goQ('+i+')">'+(i+1)+'</span>';} document.getElementById('qNums').innerHTML=h;}
-function goQ(i){cur=i; showQ();}
-function showQ(){document.getElementById('qText').innerText='Q '+(cur+1)+'. '+qs[cur][0]; let h=''; for(let i=1;i<=4;i++){h+='<div class="opt '+(ans[cur]==i-1?'sel':'')+'" onclick="selectOpt('+(i-1)+')">'+qs[cur][i]+'</div>';} document.getElementById('opts').innerHTML=h; showNums();}
-function selectOpt(i){ans[cur]=i; showQ();}
-function nextQ(){if(cur<totalQ-1){cur++; showQ();}}
-function prevQ(){if(cur>0){cur--; showQ();}}
-function submitExam(){
-  clearInterval(timerInt); let score=0; for(let i=0;i<totalQ;i++){if(ans[i]==qs[i][5]) score++;}
-  let rec={id:curUser,name:students[curUser].name,exam:curExam,score:score,total:totalQ,time:new Date().toLocaleString('en-IN')};
-  results.push(rec); localStorage.setItem('cal_res',JSON.stringify(results));
-  document.getElementById('examDiv').style.display='none';
-  document.getElementById('resultDiv').style.display='block';
-  document.getElementById('score').innerText=score+' / '+totalQ;
-  document.getElementById('rInfo').innerText=curUser+' | '+students[curUser].name+' | '+curExam+' | Level '+curLevel;
-}
+const STUDENTS={KID:["U.LAKSHMI SAHANA","K.MAANVI","K.POORNA VAISHNAVI","P.REHAN SAI","S.SRIHA DAKSHA","D.LEKHANA","CH.RANDHEER NAIDU","P.S.MAYUKHA","K.KAVISH","K.ASHWADH PAATYA","K.MOKSHIGN","V.LAKSHMI MUKTHA","V.ROSHAN KAPARDHI","G.S.N.JAYANSH REDDY","P.RISHITH KRISHNA","V.KRITIN","V.V.KUSHAL KRISHNA","SHAIK THAHEER","P.HARSHA VARDHAN","N.CATHERINE","T.TEJ PREETH SAI","CH.NACHIKETA SURYA","CH.MOHIT KRISHNA PRASAD","U.NEEHAN VARMA","P.JASHWIN KRITHIK","CH.PUNEETH SARAVAN","V.MOKSHITH NAIDU","G.GANA HARSHA VARDHAN","G.KUNAL","K.MAHASWIN","L.BHODHAN SHIVA SAI","B.LASHVITHA SREESHA","D.SEVITHA DHANVI SRI","J.SAI RIHAN","Y.VENKAT SARADHA"],L1:["K.DHURVI","B.JAIVARDHAN SAI","G.SANJAY YASH","B.ASRITHA","B.PROKSHANA PAVITHRA","R.REVENTH NAIDU","G.DEVANSH","B.KARTHIKEYA","D.MANISH","B.MONISHA","R.JNANESH NAIDU","G.LASYA SREE","R.SURYA TEJAS","M.HIMANK","D.ROHITH","N.HARSHAALI","S.CHARVI","P.TEHALYA","P.HASINI","J.TARAK","K.CHARISHMA","Y.VENKAT SARADHA","G.RAVI CHANDRIKA","T.V.SRI NIVEDHA","P.CHEREETH","M.KHUSHAL SARAVANA REDDY","K.SAI VIVANSH","T.ROSHAN SRIKANTH","MOHIT KUMAWAT","L.MONISH SAI MIHIR","D.VEDAVARSHINI","S.JAITHRA JASWIN","B.SAARUPYA","R.SHARWIK","M.THASVIKA","P.LAVISHA"],L2:[],L3:["N.DEVANSH NAIDU","B.ESWAR KARTHIK","S.PURANJAY PUSHKAR","G.CHIRAG JAINANDH","S.KOMAL RAM SAI","K.YESWIN","K.YAMENE PRIYA LASSYA","M.CHAITHRIKA","M.JAI VIHAAN","G.SRAVAN KUMAR","N.THEJASH","P.SRIKAR SURYA","P.TULYA SREE","CH.AKSHARA","P.DEVI PRIYA","S.ANIKA","S.ANANYA","P.BINDU","M.AADHYAN VARMA","G.V.S.S.BHAVYANSH REDDY","R.MOKSHA","AHANA CHOPRA","M.SAI MOKITHA","M.SUCHISHMA","B.PUNEETH","K.ANAY","M.JESHWIN","T.AJAY NAIDU","M.BUVAN CHANDRA","Y.HEMALATHA","Y.LOKSHITH REDDY","N.DEVANSH VARMA","B.KARTHIK","T.NANDANA","L.JASWIN SAI"],L4:["K.SHERLY RUTH","P.AADVIKA","N.SAATVIKA","P.DHARSHITH","P.ASWIN SWAROOP","B.NEHARIKA","M.KUNDANA","S.THANMAYI","L.J.DEVANSH","P.MOKSHA","P.GOUSHIK","G.TEJASREE","T.BASVIKA SATYA","A.PAVITHRA","L.JASWIN SAI","M.DANISH ABHIRAM NAIDU","S.KARTHIK","S.KUSHAL","P.DIVANSH","S.VINDHYA VAHINI SREE","V.BHARGAVA NAIDU","K.ADHITHI TEJ","A.PAVAN KUMAR","B.GNANADEEP","T.JOSHIKA"],L5:["B.ABHINAV","TITHI M JAIN","B.SANJANA","K.SAI KOUSHIK","S.CHETAN","T.UMA SAI SATHWIK","M.CHETAN VARUN SAI","L.J.MADHU HASITHA","K.ROHITHA SRI","N.SUSANTH","V.PREM CHANDH","T.JATIN","P.SAI SUPREETH","B.TANMAI SHRIKAR"]};
+const LEVELS={KID:{name:"KID LEVEL",start:1,totalQ:50,timeMin:10,totalMarks:100,label:"50 Sums - 10 Demos + 1 Final"},L1:{name:"Level 1",start:1001,totalQ:100,timeMin:10,totalMarks:200,label:"100 Sums - 10 Demos + 1 Final"},L2:{name:"Level 2",start:2001,totalQ:100,timeMin:10,totalMarks:200,label:"100 Sums - 10 Demos + 1 Final"},L3:{name:"Level 3",start:3001,totalQ:100,timeMin:10,totalMarks:200,label:"100 Sums - Single Digit Only - 10 Demos + 1 Final"},L4:{name:"Level 4",start:4001,totalQ:150,timeMin:10,totalMarks:300,label:"150 Sums - 100 Add + 50 Mult - 10 Demos + 1 Final"},L5:{name:"Level 5",start:5001,totalQ:150,timeMin:15,totalMarks:300,label:"150 Sums - 100 Add + 25 Mult + 25 Div - 10 Demos + 1 Final"}};
+function getStudentName(l,n){let i=n-LEVELS[l].start;return STUDENTS[l]&&STUDENTS[l][i]?STUDENTS[l][i]:"Student "+n;}
+function getIdFor(l,i){return "NV"+String(LEVELS[l].start+i).padStart(4,'0');}
+let seed=1;function rnd(){seed=(seed*9301+49297)%233280;return seed/233280;}
+function genAdd(nRows,seedVal,maxD){seed=seedVal;let qs=[];for(let i=0;i<50;i++){let rows=[];for(let r=0;r<nRows;r++){let v=Math.floor(rnd()*9)+1;if(r>0&&rnd()<0.35)v=-v;if(maxD==1&&Math.abs(v)>=10)v=v%10;rows.push(v);}let s=rows.reduce((a,b)=>a+b,0);if(rows[0]<0)rows[0]=Math.abs(rows[0]);qs.push({nums:rows,ans:rows.reduce((a,b)=>a+b,0),type:"ADD"});}return qs;}
+function genMul(n,seedVal,min,max){seed=seedVal;let qs=[];for(let i=0;i<n;i++){let a=Math.floor(rnd()*(max-min+1))+min;let b=Math.floor(rnd()*8)+2;qs.push({nums:[a,b],ans:a*b,type:"MUL",display:"<div class='mul-box'><div class='mul-row'><span></span><span>"+a+"</span></div><div class='mul-row'><span>x</span><span>"+b+"</span></div><div class='line'></div><div style='font-size:13px;color:#888;text-align:center'>Answer Kindha Rayandi</div></div>"});}return qs;}
+function genDiv(n,seedVal){seed=seedVal;let qs=[];for(let i=0;i<n;i++){let b=Math.floor(rnd()*7)+2;let ans=Math.floor(rnd()*90)+10;let a=b*ans+Math.floor(rnd()*b);let an=Math.round((a/b)*100)/100;qs.push({nums:[a,b],ans:an,type:"DIV",display:"<div class='div-box'>"+a+" ÷ "+b+" =</div>"});}return qs;}
+function genPaper(k,paperNo){
+let base=paperNo*1000+ (k.charCodeAt(0)*100);
+if(k==='KID')return genAdd(4,base+paperNo,2).slice(0,50);
+if(k==='L1'){if(paperNo<=3)return genAdd(4,base+paperNo,2).concat(genAdd(5,base+paperNo+99,2)).slice(0,100);return genAdd(5,base+paperNo,2).concat(genAdd(4,base+paperNo+77,2)).slice(0,100);}
+if(k==='L2'){if(paperNo<=4)return genAdd(4,base+paperNo,2).concat(genAdd(5,base+paperNo+99,2)).slice(0,100);return genAdd(5,base+paperNo,2).concat(genAdd(4,base+paperNo+77,2)).slice(0,100);}
+if(k==='L3'){let a=genAdd(4,base+paperNo,1).map(q=>({nums:q.nums.map(v=>{let s=v<0?-1:1;let av=Math.abs(v)%10;return s*av;}),ans:0,type:"ADD"}));a.forEach(q=>q.ans=q.nums.reduce((x,y)=>x+y,0));return a.concat(genAdd(5,base+paperNo+50,1).map(q=>({nums:q.nums.map(v=>{let s=v<0?-1:1;return s*(Math.abs(v)%10);}),ans:0,type:"ADD"}))).map(q=>{q.ans=q.nums.reduce((x,y)=>x+y,0);return q;}).slice(0,100);}
+if(k==='L4'){if(paperNo===1||paperNo===2)return genAdd(4,base+paperNo,2).concat(genAdd(5,base+paperNo+99,2)).slice(0,100);if(paperNo>=3&&paperNo<=7)return genMul(50,base+paperNo,10,99);if(paperNo===99)return genAdd(4,base+1,2).concat(genAdd(5,base+2,2)).slice(0,100).concat(genMul(50,base+5,10,99));return genAdd(4,base+paperNo,2).slice(0,100);}
+if(k==='L5'){if(paperNo>=1&&paperNo<=5)return genAdd(5,base+paperNo,2).concat(genAdd(6,base+paperNo+99,2)).slice(0,100);if(paperNo===6)return genMul(25,base+6,100,999);if(paperNo===7)return genDiv(25,base+7);if(paperNo===8)return genMul(25,base+8,100,999);if(paperNo===9)return genDiv(25,base+9);if(paperNo===99)return genAdd(5,base+1,2).concat(genAdd(6,base+2,2)).slice(0,100).concat(genMul(25,base+6,100,999)).concat(genDiv(25,base+7,100,999));return genAdd(5,base+paperNo,2).slice(0,100);}
+return [];}
+let currentUser=null,currentLevel=null,currentPaper=null,isFinal=false,questions=[],answers=[],marked=[],curIdx=0,timerInt=null,timeLeft=0;
+function doLogin(){let u=document.getElementById('uid').value.trim().toUpperCase();let p=document.getElementById('pwd').value.trim();let err=document.getElementById('loginErr');if(u==='KSK'&&p==='2013'){currentUser={name:'TEACHER - KSK',id:'KSK',role:'teacher'};showDash();return;}if(u==='ASHU'&&p==='1220'){currentUser={name:'RESULT ADMIN - ASHU',id:'ASHU',role:'admin'};showAllResults();return;}let m=u.match(/^NV(\d+)$/);if(m&&p===u){let num=parseInt(m[1]);let lvl=null;if(num>=1&&num<=999)lvl='KID';else if(num>=1001&&num<=1999)lvl='L1';else if(num>=2001&&num<=2999)lvl='L2';else if(num>=3001&&num<=3999)lvl='L3';else if(num>=4001&&num<=4999)lvl='L4';else if(num>=5001&&num<=5999)lvl='L5';if(lvl){window._userNum=num;let nm=getStudentName(lvl,num);currentUser={name:nm,id:u,role:'student',level:lvl,num:num};showDash();return;}}err.innerText='Wrong Username / Password! Ex: NV0001 / NV0001';}
+function showDash(){hideAll();document.getElementById('dashPage').classList.remove('hidden');document.getElementById('userLabel').innerText=currentUser.name+' - '+currentUser.id;let list=document.getElementById('levelList');list.innerHTML='';let levelsToShow=currentUser.role==='student'?[currentUser.level]:['KID','L1','L2','L3','L4','L5'];document.getElementById('welcomeTitle').innerText=currentUser.role==='teacher'?'Welcome Teacher - KSK Sir':'Welcome '+currentUser.name;document.getElementById('welcomeSub').innerText=currentUser.role==='student'?LEVELS[currentUser.level].name+' - ID: '+currentUser.id+' - Mee Level Matrame Kanipisthundhi':'Anni Levels - 2 Folders - 10 Demos + 1 Final';let box=document.getElementById('studentListBox');box.innerHTML='';if(currentUser.role!=='student'){let h='<h3 style="margin-top:14px">📋 Participants List - Level Wise - Codes Tho</h3>';['KID','L1','L2','L3','L4','L5'].forEach(k=>{h+=`<p style="margin-top:10px"><b>${LEVELS[k].name} - ${STUDENTS[k].length} Students</b></p><p>`;STUDENTS[k].forEach((nm,i)=>{h+=`<span class="pill">${getIdFor(k,i)} - ${nm}</span>`;});h+='</p>';});box.innerHTML=h;}else{let h=`<p style="margin-top:10px"><b>${LEVELS[currentUser.level].name} - ${STUDENTS[currentUser.level].length} Students</b></p><p>`;STUDENTS[currentUser.level].forEach((nm,i)=>{h+=`<span class="pill">${getIdFor(currentUser.level,i)} - ${nm}</span>`;});h+='</p>';box.innerHTML=h;}levelsToShow.forEach(k=>{let L=LEVELS[k];list.innerHTML+=`<div class="white" style="cursor:pointer" onclick="openLevel('${k}')"><h3>${L.name} - ${L.label}</h3><p style="color:#666;font-size:13px;margin-top:6px">${L.totalQ} Sums | ${L.timeMin} Min | ${L.totalMarks} Marks | Students: ${STUDENTS[k].length}</p><p style="margin-top:10px"><span class="badge">📁 10 Demos</span> <span class="badge badge-green">📁 1 Final Exam</span></p></div>`;});}
+function openLevel(k){currentLevel=k;hideAll();document.getElementById('levelPage').classList.remove('hidden');document.getElementById('levelTitle').innerText=LEVELS[k].name;document.getElementById('demoDesc').innerText=LEVELS[k].label+' - '+LEVELS[k].totalQ+' Sums - '+LEVELS[k].timeMin+' Min';document.getElementById('finalDesc').innerText=LEVELS[k].label+' - '+LEVELS[k].totalQ+' Sums - '+LEVELS[k].timeMin+' Min';renderFolders();}
+function demoLabel(l,i){if(l==='L4'){if(i===1)return 'Demo 1 - Add Paper 1 - 100 Sums';if(i===2)return 'Demo 2 - Add Paper 2 - 100 Sums';if(i===3)return 'Demo 3 - Mult Paper 1 - 50 Sums';if(i===4)return 'Demo 4 - Mult Paper 2 - 50 Sums';if(i===5)return 'Demo 5 - Mult Paper 3 - 50 Sums';if(i===6)return 'Demo 6 - Mult Paper 4 - 50 Sums';if(i===7)return 'Demo 7 - Mult Paper 5 - 50 Sums';return 'Demo '+i+' - Add + Mult Mix - 100 Sums';}if(l==='L5'){if(i>=1&&i<=5)return 'Demo '+i+' - Add Paper '+i+' - 100 Sums';if(i===6)return 'Demo 6 - Mult Paper - 25 Sums';if(i===7)return 'Demo 7 - Div Paper - 25 Sums';if(i===8)return 'Demo 8 - Mult Paper - 25 Sums';if(i===9)return 'Demo 9 - Div Paper - 25 Sums';return 'Demo 10 - Mix - 100 Sums';}if(l==='KID')return 'Demo '+i+' - 50 Sums';return 'Demo '+i+' - '+LEVELS[l].totalQ+' Sums';}
+function renderFolders(){let d=document.getElementById('demoList');let html='<h3>📁 Folder 1 - 10 Demos - Result Immediately</h3>';for(let i=1;i<=10;i++){html+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #eee"><span><b>${demoLabel(currentLevel,i)}</b> - ${LEVELS[currentLevel].timeMin} Min</span><button class="btn btn-blue" style="width:auto;padding:9px 20px" onclick="startExam(false,${i})">Start Demo ${i}</button></div>`;}d.innerHTML=html;let f=document.getElementById('finalList');f.innerHTML=`<h3>📁 Folder 2 - Final / Main Exam</h3><div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0"><span><b>Final NOV 2026 - ${LEVELS[currentLevel].name}</b> - ${LEVELS[currentLevel].totalQ} Sums</span><button class="btn" style="width:auto;padding:9px 20px" onclick="startFinal()">Start Final</button></div><p style="font-size:12px;color:#888">Final open cheyataniki KSK / 2013 kavali. Final Result 10 Hours tarvatha ashu / 1220 tho matrame.</p>`;}
+function openDemos(){document.getElementById('demoList').scrollIntoView({behavior:'smooth'});}
+function openFinal(){document.getElementById('finalList').scrollIntoView({behavior:'smooth'});}
+function goDash(){hideAll();document.getElementById('dashPage').classList.remove('hidden');}
+function hideAll(){['loginPage','dashPage','levelPage','examPage','resultPage'].forEach(id=>document.getElementById(id).classList.add('hidden'));}
 function logout(){location.reload();}
-</script>
-</body>
-</html>
+async function startCamera(){try{let s=await navigator.mediaDevices.getUserMedia({video:true,audio:false});document.getElementById('camVideo').srcObject=s;}catch(e){document.getElementById('camBox').style.display='none';}}
+function startFinal(){let pwd=prompt('Main Exam Open Cheyataniki Teacher Password - KSK Password Enter Cheyandi (2013):');if(pwd!=='2013'){alert('Wrong Teacher Password! Main Exam - KSK / 2013 thone open avuthundhi Sir!');return;}startExam(true,0);}
+function startExam(final,paperNo){isFinal=final;currentPaper=paperNo;questions=genPaper(currentLevel,paperNo===0?99:paperNo);answers=new Array(questions.length).fill('');marked=new Array(questions.length).fill(false);curIdx=0;hideAll();document.getElementById('examPage').classList.remove('hidden');document.getElementById('examTitle').innerText=(final?'Final NOV 2026 - ':'Demo '+paperNo+' - ')+LEVELS[currentLevel].name;document.getElementById('examLevel').innerText=LEVELS[currentLevel].name;document.getElementById('studentNameExam').innerText=currentUser.name;timeLeft=LEVELS[currentLevel].timeMin*60;clearInterval(timerInt);timerInt=setInterval(()=>{timeLeft--;let m=Math.floor(timeLeft/60),s=timeLeft%60;document.getElementById('timer').innerText='Time Left : '+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');if(timeLeft<=0){clearInterval(timerInt);submitExam();}},1000);document.getElementById('timer').innerText='Time Left : '+String(LEVELS[currentLevel].timeMin).padStart(2,'0')+':00';startCamera();renderQ();}
+function renderQ(){let q=questions[curIdx];document.getElementById('qNo').innerText=curIdx+1;let box=document.getElementById('qNums');if(q.type==='MUL'||q.type==='DIV'){box.className='';box.innerHTML=q.display;}else{box.className='num-col';box.innerHTML=q.nums.join('<br>');}document.getElementById('ansBox').value=answers[curIdx];let pal=document.getElementById('qPalette');pal.innerHTML='';questions.forEach((_,i)=>{let cls='qnum';if(i===curIdx)cls+=' active';else if(marked[i]&&answers[i]!=='')cls+=' ans-marked';else if(marked[i])cls+=' marked';else if(answers[i]!=='')cls+=' answered';pal.innerHTML+=`<div class="${cls}" onclick="goQ(${i})">${i+1}</div>`;});}
+function goQ(i){curIdx=i;renderQ();}
+function pressKey(k){let b=document.getElementById('ansBox');b.value+=k;answers[curIdx]=b.value;renderQ();}
+function backspace(){let b=document.getElementById('ansBox');b.value=b.value.slice(0,-1);answers[curIdx]=b.value;renderQ();}
+function clearAns(){answers[curIdx]='';renderQ();}
+function saveNext(){if(curIdx<questions.length-1){curIdx++;renderQ();}}
+function markReview(){marked[curIdx]=true;if(curIdx<questions.length-1){curIdx++;renderQ();}else renderQ();}
+function submitExam(){if(!confirm('Do you want to end the exam?'))return;clearInterval(timerInt);let corr=0,wrong=0,leave=0;questions.forEach((q,i)=>{if(answers[i]==='')leave++;else if(parseFloat(answers[i])===q.ans)corr++;else wrong++;});let score=corr*2;let key='res_'+currentLevel+'_'+(isFinal?'FINAL':'DEMO'+currentPaper)+'_'+currentUser.id;localStorage.setItem(key,JSON.stringify({level:currentLevel,isFinal:isFinal,paper:currentPaper,user:currentUser.id,name:currentUser.name,score:score,total:questions.length*2,correct:corr,wrong:wrong,leave:leave,time:Date.now(),answers:answers,questions:questions}));hideAll();document.getElementById('resultPage').classList.remove('hidden');if(isFinal){document.getElementById('resTitle').innerText='Final Exam Submitted ✅ - '+currentUser.name;document.getElementById('resSub').innerText='Final Result - 10 Hours Tarvatha - ashu / 1220 Login Tho Chudandi.';document.getElementById('resDetail').innerHTML='<p style="font-size:14px;color:#666">Exam End: '+new Date().toLocaleString()+'<br>Result Open: '+new Date(Date.now()+10*3600*1000).toLocaleString()+'</p>';document.getElementById('rScore').innerText='LOCKED 🔒';document.getElementById('rAtt').innerText='-';document.getElementById('rAcc').innerText='-';document.getElementById('rCorr').innerText='-';document.getElementById('rWrong').innerText='-';document.getElementById('rLeave').innerText='-';}else{document.getElementById('resTitle').innerText='Demo '+(currentPaper)+' Result - '+LEVELS[currentLevel].name+' - '+currentUser.name;document.getElementById('resSub').innerText='Demo Result - Ventane Vachindhi!';let detail='<table><tr><th>Q.No</th><th>Question</th><th>Your Ans</th><th>Correct Ans</th><th>Status</th></tr>';questions.forEach((q,i)=>{let st=answers[i]===''? 'Leave' : (parseFloat(answers[i])===q.ans? 'Correct':'Wrong');let col=st==='Correct'?'green':st==='Wrong'?'red':'orange';let qtext=q.type==='MUL'?q.nums[0]+' x '+q.nums[1]+' =':q.type==='DIV'?q.nums[0]+' ÷ '+q.nums[1]+' =':q.nums.join(' , ');detail+=`<tr><td>${i+1}</td><td>${qtext}</td><td>${answers[i]===''? '-':answers[i]}</td><td>${q.ans}</td><td style="color:${col};font-weight:700">${st}</td></tr>`;});detail+='</table>';document.getElementById('resDetail').innerHTML=detail;document.getElementById('rScore').innerText=score+' / '+(questions.length*2);document.getElementById('rAtt').innerText=(corr+wrong)+' / '+questions.length;document.getElementById('rAcc').innerText=Math.round(corr/(corr+wrong||1)*100)+'%';document.getElementById('rCorr').innerText=corr;document.getElementById('rWrong').innerText=wrong;document.getElementById('rLeave').innerText=leave;}if(document.getElementById('camVideo').srcObject){document.getElementById('camVideo').srcObject.getTracks().forEach(t=>t.stop());}}
+function showAllResults(){let found=[];for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i);if(k.startsWith('res_')&&k.includes('FINAL')){try{let d=JSON.parse(localStorage.getItem(k));found.push(d);}catch(e){}}}hideAll();document.getElementById('resultPage').classList.remove('hidden');document.getElementById('resTitle').innerText='Final Results - Admin - ashu';document.getElementById('resSub').innerText='10 Hours ayina results matrame open avuthayi.';if(found.length===0){document.getElementById('resDetail').innerHTML='<p>Inka Final Results levu. Student Final Exam submit chesaka 10 hours tarvatha ikkada kanipisthayi.</p>';}else{let html='<table><tr><th>Student</th><th>Level</th><th>Score</th><th>Correct</th><th>Wrong</th><th>Time</th></tr>';found.forEach(d=>{let canOpen=(Date.now()-d.time)>=10*3600*1000;html+=`<tr><td>${d.name} (${d.user})</td><td>${d.level}</td><td>${canOpen?d.score+' / '+d.total:'LOCKED 🔒'}</td><td>${canOpen?d.correct:'-'}</td><td>${canOpen?d.wrong:'-'}</td><td>${new Date(d.time).toLocaleString()}</td></tr>`;});html+='</table>';document.getElementById('resDetail').innerHTML=html;}document.getElementById('rScore').innerText=found.length+' Finals';document.getElementById('rAtt').innerText='-';document.getElementById('rAcc').innerText='-';document.getElementById('rCorr').innerText='-';document.getElementById('rWrong').innerText='-';document.getElementById('rLeave').innerText='-';}
+</script></body></html>
