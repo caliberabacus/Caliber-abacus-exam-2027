@@ -3,32 +3,32 @@
 <title>CALIBER ABACUS - Exam 2027</title>
 <style>
 *{box-sizing:border-box;font-family:Arial}body{margin:0;background:#f1f5f9;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-.card{max-width:640px;margin:8px auto;background:#fff;border-radius:10px;padding:10px}
-input{width:100%;padding:12px;border:1.5px solid #999;border-radius:4px;font-size:19px;text-align:center}
+.card{max-width:640px;margin:8px auto;background:#fff;border-radius:10px;padding:8px}
+input{width:100%;padding:10px;border:1.5px solid #999;border-radius:4px;font-size:18px;text-align:center}
 button{border:0;border-radius:6px;font-weight:700;cursor:pointer}
 .pwd-wrap{position:relative;margin-top:8px}.pwd-wrap input{padding-right:48px}
 .eye-btn{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:#f1f5f9;border:1px solid #ddd;width:38px;height:38px;border-radius:6px;font-size:19px}
-.qnums{display:flex;gap:5px;overflow-x:auto;padding:6px 0}.qnums div{min-width:28px;height:28px;border-radius:50%;background:#fecaca;color:#991b1b;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.qnums{display:flex;gap:4px;overflow-x:auto;padding:4px 0}.qnums div{min-width:26px;height:26px;border-radius:50%;background:#fecaca;color:#991b1b;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
 .qnums .done{background:#22c55e;color:#fff}.qnums .review{background:#a855f7;color:#fff}.qnums .now{border:2px solid #000}
 .legend{display:flex;gap:6px;font-size:10px}.legend span{padding:2px 6px;border-radius:12px;color:#fff;font-weight:700}
-.qbox{width:280px;border:2.5px solid #000;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.12)}
-.dtp-table{width:100%;border-collapse:collapse}.dtp-table td{border-bottom:1.5px solid #000;padding:0;height:56px}.dtp-table tr:last-child td{border-bottom:0}
-.dtp-row{display:flex;justify-content:flex-start;align-items:center;height:56px;padding-left:18px}
-.dtp-cell{width:42px;text-align:left;font-family:'Arial Black',Arial,sans-serif;font-size:44px;font-weight:900;color:#000;line-height:1;letter-spacing:0}.dtp-cell.sign{width:32px;font-size:42px;text-align:left}.dtp-cell.empty{width:42px}
-.qbox.horizontal{width:280px;padding:12px;text-align:left}.qbox.horizontal .dtp-h{font-family:'Arial Black',Arial,sans-serif;font-size:40px;font-weight:900;text-align:left;line-height:1.1;color:#000}
-.exam-main{display:block;margin-top:10px}
-.right{margin-top:10px;display:flex;flex-direction:column;gap:10px}
-.ans-input{width:100%;padding:14px;border:2px solid #000;border-radius:2px;font-size:26px;font-weight:800;text-align:left;color:#000;background:#fff}
+.qbox{width:260px;border:2.5px solid #000;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.dtp-table{width:100%;border-collapse:collapse}.dtp-table td{border-bottom:1.5px solid #000;padding:0;height:42px}.dtp-table tr:last-child td{border-bottom:0}
+.dtp-row{display:flex;justify-content:flex-start;align-items:center;height:42px;padding-left:16px}
+.dtp-cell{width:38px;text-align:left;font-family:'Arial Black',Arial,sans-serif;font-size:38px;font-weight:900;color:#000;line-height:1}.dtp-cell.sign{width:28px;font-size:36px}.dtp-cell.empty{width:38px}
+.qbox.horizontal{width:260px;padding:8px;text-align:left}.qbox.horizontal .dtp-h{font-family:'Arial Black',Arial,sans-serif;font-size:34px;font-weight:900;text-align:left;line-height:1.1;color:#000}
+.exam-main{display:block;margin-top:6px}
+.right{margin-top:6px;display:flex;flex-direction:column;gap:6px}
+.ans-input{width:100%;padding:10px;border:2px solid #000;border-radius:2px;font-size:22px;font-weight:800;text-align:left;color:#000;background:#fff}
 .ans-input::placeholder{color:#888;text-align:left;font-weight:400}
-.keypad{background:#e9e9e9;padding:12px;border-radius:2px;width:100%;margin:0 auto}
-.keypad-inner{width:260px;margin:0 auto}
-.keypad .khead{background:#fff;border:1px solid #999;text-align:center;font-size:22px;padding:12px;border-radius:6px;font-weight:700}
-.keypad-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px}
-.keypad-grid button{background:#fff;border:1px solid #999;padding:14px;font-size:24px;font-weight:800;color:#000;border-radius:6px}
-.keypad-bottom{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px;align-items:start}
-.keypad-bottom button{background:#fff;border:1px solid #999;padding:12px 6px;font-size:22px;font-weight:800;color:#000;border-radius:6px}
-.keypad-bottom .clearBtn{font-size:19px;line-height:1.1;padding:7px 6px}
-.bottom-bar{display:flex;gap:8px;margin-top:10px}.bottom-bar button{flex:1;padding:14px;font-size:14px}
+.keypad{background:#e9e9e9;padding:7px;border-radius:2px;width:100%;margin:0 auto}
+.keypad-inner{width:230px;margin:0 auto}
+.keypad .khead{background:#fff;border:1px solid #999;text-align:center;font-size:17px;padding:7px;border-radius:6px;font-weight:700}
+.keypad-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-top:5px}
+.keypad-grid button{background:#fff;border:1px solid #999;padding:8px;font-size:19px;font-weight:800;color:#000;border-radius:6px}
+.keypad-bottom{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-top:5px;align-items:start}
+.keypad-bottom button{background:#fff;border:1px solid #999;padding:8px 6px;font-size:18px;font-weight:800;color:#000;border-radius:6px}
+.keypad-bottom .clearBtn{font-size:15px;line-height:1.1;padding:5px 6px}
+.bottom-bar{display:flex;gap:6px;margin-top:6px;position:sticky;bottom:0;background:#fff;padding:6px 0;z-index:10}.bottom-bar button{flex:1;padding:12px;font-size:14px}
 .btn-blue{background:#1e7ac0;color:#fff}.btn-red{background:#dc2626;color:#fff}.btn-grey{background:#e9e9e9;color:#000;border:1px solid #ccc}
 .level{padding:14px;border-radius:12px;margin:8px 0;color:#fff;font-weight:700;cursor:pointer}
 .hidden{display:none}.small{font-size:12px;color:#666;text-align:center}
@@ -99,23 +99,21 @@ button{border:0;border-radius:6px;font-weight:700;cursor:pointer}
 <button onclick="backLevels()" style="background:#1e293b;color:#fff;padding:12px;width:100%;margin-top:8px">Back to Courses</button>
 </div>
 <div class="card hidden" id="examBox">
-<div style="display:flex;justify-content:space-between;font-size:14px;font-weight:700"><span>Section</span><span>Time Left : <span id="timer">10:00</span></span></div>
-<div style="margin:6px 0"><span style="background:#2563eb;color:#fff;padding:5px 12px;border-radius:20px;font-size:13px" id="secLabel">KID ●</span> <span style="font-size:13px">Marks : 100</span></div>
-<div style="font-size:13px;margin:8px 0;line-height:1.6"><span style="color:#ea580c">Question Type: NAT</span><br><b id="qNo">Question No. 1</b> &nbsp; Mark/s: <b style="color:#16a34a">2.00</b> | Negative: <b style="color:#dc2626">0.00</b> <span id="totalQ"></span></div>
+<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700"><span>Section</span><span>Time Left : <span id="timer">10:00</span></span></div>
+<div style="margin:4px 0"><span style="background:#2563eb;color:#fff;padding:4px 10px;border-radius:20px;font-size:12px" id="secLabel">KID ●</span> <span style="font-size:12px">Marks : 100</span></div>
+<div style="font-size:12px;margin:4px 0;line-height:1.4"><span style="color:#ea580c">Question Type: NAT</span><br><b id="qNo">Question No. 1</b> &nbsp; Mark/s: <b style="color:#16a34a">2.00</b> | Negative: <b style="color:#dc2626">0.00</b> <span id="totalQ"></span></div>
 <div class="legend"><span style="background:#22c55e">● Answered</span><span style="background:#ef4444">● Not Answered</span><span style="background:#a855f7">● Review</span></div>
 <div class="qnums" id="qnums"></div>
 <div class="exam-main"><div class="qbox" id="qbox"><div style="width:100%" id="qtext"></div></div><div class="right"><input id="ans" class="ans-input" readonly placeholder="Enter Answer"><div class="keypad"><div class="keypad-inner"><div class="khead" onclick="backspace()">Backspace</div><div class="keypad-grid"><button onclick="press('7')">7</button><button onclick="press('8')">8</button><button onclick="press('9')">9</button><button onclick="press('4')">4</button><button onclick="press('5')">5</button><button onclick="press('6')">6</button><button onclick="press('1')">1</button><button onclick="press('2')">2</button><button onclick="press('3')">3</button><button onclick="press('0')">0</button><button onclick="press('.')">.</button><button onclick="press('-')">-</button></div><div class="keypad-bottom"><button onclick="backspace()">←</button><button onclick="goNext()">→</button><button class="clearBtn" onclick="clearAns()">Clear<br>All</button></div></div></div></div></div>
 <div class="bottom-bar"><button class="btn-blue" onclick="saveNext()">Save & Next</button><button class="btn-red" onclick="submitExam()">Submit Exam</button></div>
-<div class="bottom-bar"><button class="btn-grey" onclick="markReview()">Mark for review and Next</button><button class="btn-grey" onclick="clearAns()">Clear Response</button></div>
+<div class="bottom-bar" style="position:static;padding:0"><button class="btn-grey" onclick="markReview()">Mark for review and Next</button><button class="btn-grey" onclick="clearAns()">Clear Response</button></div>
 <p class="small" id="result"></p><button onclick="backLevels()" style="background:#1e293b;color:#fff;padding:8px;width:100%;margin-top:6px;font-size:12px">← Back to All Levels</button>
 </div>
 <script>
 var qs=[],idx=0,answers={},reviewSet={},timerInt=null,left=0,curLevel="",curBase="KID",startTime=0,curExamKey="KID_DEMO1",curExamName="Level 0 - Nov 2026 Demo 1",curTotal=50,curFolderBase="KID";
 var LEVELS=[{base:"KID",title:"KID - Level 0",dur:"10:00:00"},{base:"LEVEL 1",title:"Level 1",dur:"10:00:00"},{base:"LEVEL 2",title:"Level 2",dur:"10:00:00"},{base:"LEVEL 3",title:"Level 3",dur:"10:00:00"},{base:"LEVEL 4",title:"Level 4",dur:"12:00:00"},{base:"LEVEL 5",title:"Level 5",dur:"12:00:00"}];
 var EXAMS=[];(function(){for(var li=0;li<LEVELS.length;li++){var b=LEVELS[li].base;for(var d=1;d<=10;d++){EXAMS.push({key:b+"_DEMO"+d,base:b,name:LEVELS[li].title+" - Demo "+d+" - Nov 2026",short:LEVELS[li].title+" - Demo "+d,dur:LEVELS[li].dur,tick:"✓"});}EXAMS.push({key:b+"_FINAL",base:b,name:"Final NOV 2026 - "+LEVELS[li].title,short:"Final NOV 2026 - "+LEVELS[li].title,dur:LEVELS[li].dur,tick:"◷"});}})();
-// KID DEMO SET - 50 Q - FIXED - Q14 FIXED - All running totals >=0
 var KID_FIXED=[[3,1,-2,4],[4,-2,3,5],[3,-1,-2,6],[5,3,-2,2],[1,5,2,1],[4,-1,-3,6],[6,1,3,-2],[7,2,-5,4],[9,4,-1,2],[3,6,-4,5],[5,4,-3,-1],[6,3,-5,2],[9,-5,-1,4],[4,-2,-1,5],[4,-2,-1,6],[9,-5,-2,4],[8,-3,1,2],[1,3,-2,5],[2,2,-4,6],[2,5,-1,3],[1,2,-1,5],[3,-2,-1,4],[7,-2,-2,4],[9,4,-5,3],[4,-2,-1,6],[2,5,-5,4],[8,-3,-2,5],[3,5,-3,4],[6,-1,-2,5],[2,5,-2,3],[5,2,-3,3],[3,1,-2,6],[1,2,-1,5],[6,3,-2,2],[7,5,-2,2],[6,5,-2,2],[4,2,-2,5],[8,-3,-2,6],[2,7,-5,3],[4,-3,-1,6],[1,2,2,-2,5],[3,2,-4,5,1],[4,3,-2,1,2],[5,1,-2,3,1],[2,1,-2,4,1],[3,1,-2,5,1],[4,2,-3,1,2],[5,2,-1,3,1],[1,2,-2,4,1],[3,1,-2,5,1]];
-// KID FINAL SET - 50 Q - FIXED - All running totals >=0 - Validated
 var KID_FINAL_FIXED=[[5,2,-3,4],[6,-2,2,3],[4,3,-2,5],[8,-3,1,2],[3,4,-2,3],[7,-2,-1,5],[9,1,-4,3],[2,6,-3,4],[5,-1,2,3],[6,2,-3,4],[4,5,-2,1],[8,1,-3,3],[3,3,-1,4],[7,2,-4,3],[9,-2,1,2],[5,3,-1,2],[6,-1,3,2],[4,2,-1,5],[8,-4,2,3],[3,5,-2,4],[7,1,-2,4],[9,-3,2,1],[5,4,-3,3],[6,3,-2,2],[4,1,2,-2,4],[2,5,-1,3,1],[8,-2,1,3,1],[3,4,-1,2,1],[6,-2,3,1,2],[5,2,-1,4,1],[9,-4,1,2,1],[4,3,-1,2,1],[7,-3,2,1,2],[3,6,-2,1,1],[5,-2,4,1,1],[8,1,-2,2,1],[6,2,-1,3,1],[4,5,-3,2,1],[9,-1,1,2,1],[2,4,-1,3,1],[5,3,-2,1,2],[7,-1,2,1,1],[3,2,4,-2,2],[6,-3,1,2,1],[8,-2,3,1,1],[4,1,3,-1,2],[9,-2,1,1,1],[5,2,1,-1,2],[7,3,-2,1,1],[6,1,2,-1,2]];
 function shuffleArr(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b;}
 function kidToQ(nums){var total=0;var lines=[];for(var i=0;i<nums.length;i++){var v=nums[i];total+=v;lines.push({sign:v<0?'-':'',num:''+Math.abs(v)});}return {lines:lines,ans:total,isHorizontal:false};}
