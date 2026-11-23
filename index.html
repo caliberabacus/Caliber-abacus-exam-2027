@@ -11,12 +11,15 @@ button{border:0;border-radius:6px;font-weight:700;cursor:pointer}
 .qnums{display:flex;gap:5px;overflow-x:auto;padding:6px 0}.qnums div{min-width:28px;height:28px;border-radius:50%;background:#fecaca;color:#991b1b;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
 .qnums .done{background:#22c55e;color:#fff}.qnums .review{background:#a855f7;color:#fff}.qnums .now{border:2px solid #000}
 .legend{display:flex;gap:6px;font-size:10px}.legend span{padding:2px 6px;border-radius:12px;color:#fff;font-weight:700}
-.qbox{width:160px;border:1.5px solid #666;background:#fff;flex-shrink:0}
+/* PHOTO LAANE - QUESTION BOX - PAIN LEFT - NUMBERS LEFT */
+.qbox{width:210px;border:1.5px solid #666;background:#fff}
 .dtp-table{width:100%;border-collapse:collapse}.dtp-table td{border-bottom:1px solid #666;padding:0;height:44px}.dtp-table tr:last-child td{border-bottom:0}
-.dtp-row{display:flex;justify-content:flex-end;align-items:center;height:44px;padding-right:12px}
-.dtp-cell{width:32px;text-align:center;font-family:'Courier New',monospace;font-size:32px;font-weight:800;color:#000}.dtp-cell.sign{width:24px;font-size:30px}.dtp-cell.empty{width:32px}
-.qbox.horizontal{width:190px;padding:14px;text-align:center}.qbox.horizontal .dtp-h{font-family:'Courier New',monospace;font-size:28px;font-weight:800}
-.right{flex:1;display:flex;flex-direction:column;gap:10px}
+.dtp-row{display:flex;justify-content:flex-start;align-items:center;height:44px;padding-left:12px}
+.dtp-cell{width:32px;text-align:left;font-family:'Courier New',monospace;font-size:30px;font-weight:800;color:#000}.dtp-cell.sign{width:24px;font-size:28px;text-align:left}.dtp-cell.empty{width:32px}
+.qbox.horizontal{width:210px;padding:14px;text-align:left}.qbox.horizontal .dtp-h{font-family:'Courier New',monospace;font-size:28px;font-weight:800;text-align:left}
+/* VERTICAL LAYOUT - PHOTO LAANE */
+.exam-main{display:block;margin-top:10px}
+.right{margin-top:10px;display:flex;flex-direction:column;gap:10px}
 .keypad{background:#e9e9e9;padding:10px;border-radius:4px;width:230px;margin:0 auto}
 .keypad .khead{background:#fff;border:1px solid #999;text-align:center;font-size:16px;padding:8px;border-radius:6px}
 .keypad-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:6px}
@@ -24,7 +27,7 @@ button{border:0;border-radius:6px;font-weight:700;cursor:pointer}
 .bottom-bar{display:flex;gap:8px;margin-top:10px}.bottom-bar button{flex:1;padding:14px;font-size:14px}
 .btn-blue{background:#1e7ac0;color:#fff}.btn-grey{background:#e9e9e9;color:#000;border:1px solid #ccc}
 .level{padding:14px;border-radius:12px;margin:8px 0;color:#fff;font-weight:700;cursor:pointer}
-.hidden{display:none}.small{font-size:12px;color:#666;text-align:center}.exam-main{display:flex;gap:10px;margin-top:10px}
+.hidden{display:none}.small{font-size:12px;color:#666;text-align:center}
 #cam{position:fixed;top:48px;right:8px;width:62px;height:62px;border-radius:50%;border:3px solid #facc15;object-fit:cover;z-index:99;background:#000;display:none}
 #camLabel{position:fixed;top:112px;right:8px;font-size:9px;background:#16a34a;color:#fff;padding:2px 5px;border-radius:20px;z-index:99;display:none}
 </style></head><body>
@@ -45,102 +48,10 @@ button{border:0;border-radius:6px;font-weight:700;cursor:pointer}
 <script>
 let users={"NV0001":"U.LAKSHMI SAHANA","NV0002":"K.MAANVI","NV0003":"K.POORNA VAISHNAVI","NV5001":"B.ABHINAV","KSK":"TEACHER - KSK"};
 let qs=[],idx=0,answers={},reviewSet=new Set(),timerInt=null,left=0,curLevel="";
-// ===== KID LEVEL - PAPER LO UNNA 50 QUESTIONS - AS IT IS - FIXED - MARAVU =====
-// Paper: Time 10 Min, Marks 100, 50 Qs
-// Q1-Q10: 3 Rows Single, Q11-Q20: 4 Rows Single, Q21-Q30: 4 Rows Double+Single, Q31-Q40: 4 Rows Tens, Q41-Q50: 5 Rows Single
-// Format: [numbers...] - Minus unte - sign tho - Ex: [3,1,-2] = 3+1-2=2
+// ===== KID LEVEL - PAPER AS IT IS - ANNI SINGLE DIGIT 1-9 MATRAM =====
 let KID_FIXED=[
-[3,1,-2],[4,-2,3],[3,-1,4],[5,3,-2],[1,5,2],[4,-1,3],[6,1,-2],[7,2,-5],[9,4,-1],[3,6,-4],
-[5,4,-3,-1],[6,3,-5,-2],[9,2,-1,-3],[2,1,-3,2],[1,5,2,3],[4,-1,-3,5],[6,1,3,-2],[7,2,-5,4],[9,4,-1,3],[3,6,-4,5],
-[13,2,-1,1],[12,2,-1,1],[12,1,-2,3],[11,1,-2,4],[12,1,-2,3],[13,2,-1,1],[12,1,-2,3],[13,2,-1,1],[12,1,-2,3],[13,2,-1,1],
-[20,40,20,-40],[30,10,20,-10],[40,20,20,-20],[60,20,10,-10],[70,20,30,-20],[30,20,10,-10],[40,30,20,-10],[50,20,10,-10],[60,30,20,-10],[20,30,10,-10],
-[1,2,2,-2,5],[3,2,-4,5,1],[4,3,-2,1,2],[5,1,-2,3,1],[2,1,-2,4,1],[3,1,-2,5,1],[4,2,-3,1,2],[5,2,-1,3,1],[1,2,-2,4,1],[3,1,-2,5,1]
-];
-function shuffleArr(a){let b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
-function kidToQ(nums){let total=0;let lines=nums.map(v=>{total+=v;return {sign:v<0?'-':'',num:''+Math.abs(v)};});return {lines,ans:total,isHorizontal:false};}
-function togglePwd(){let p=document.getElementById('p');let b=document.getElementById('eyeBtn');if(p.type==="password"){p.type="text";b.innerText="🙈";}else{p.type="password";b.innerText="👁️";}}
-function login(){let u=document.getElementById('u').value.trim().toUpperCase();let p=document.getElementById('p').value.trim().toUpperCase();if(!u||!p){document.getElementById('loginMsg').innerText="Username & Password - Rendu Kottandi!";return;}if(u==="KSK"&&p==="2013"){openLevels(u);return;}if(u===p){openLevels(u);return;}document.getElementById('loginMsg').innerText="Wrong! Username = Password - Same Kottandi - Ex: NV0001 / NV0001";}
-function openLevels(u){document.getElementById('loginBox').classList.add('hidden');document.getElementById('levelBox').classList.remove('hidden');document.getElementById('welcome').innerText="Welcome "+(users[u]||u);showLevels();}
-function logout(){location.reload()}
-function showLevels(){let lv=[["KID","KID - PAPER 50 Qs AS IT IS - 10 Min - 100 Marks - Jumble Only","#22c55e"],["LEVEL 1","LEVEL 1 - PAPER AS IT IS - 50 Qs - 10 Min - 100 Marks","#16a34a"],["LEVEL 2","LEVEL 2 - PAPER AS IT IS - 50 Qs - 10 Min - 100 Marks","#2563eb"],["LEVEL 3","LEVEL 3 - PAPER AS IT IS - 50 Qs - 10 Min - 100 Marks","#f59e0b"],["LEVEL 4","LEVEL 4 - 150 Qs - 12 Min - 100 +- 4 Rows + 50 Mult 43x6","#ef4444"],["LEVEL 5","LEVEL 5 - 150 Qs - 12 Min - 100 +- 5 Rows + 25 Mult 243x5 + 25 Div 145/5","#9333ea"]];document.getElementById('levels').innerHTML=lv.map(x=>`<div class="level" style="background:${x[2]}" onclick="startExam('${x[0]}')">${x[1]} →</div>`).join('');}
-function rndRange(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
-function getTotal(l){if(l==="KID"||l==="LEVEL 1"||l==="LEVEL 2"||l==="LEVEL 3")return 50;return 150;}
-function getTime(l){if(l==="LEVEL 4"||l==="LEVEL 5")return 12*60;return 10*60;}
-function genL1One(i){
- let raw=[],total=0;let add=(n,isM)=>{if(isM){if(n>total)n=rndRange(1,Math.max(1,total));if(n===0)n=1;total-=n;raw.push({sign:'-',num:''+n});}else{total+=n;raw.push({sign:'',num:''+n});}};
- if(i<10){let first=rndRange(1,9)*10;total=first;raw.push({sign:'',num:''+first});add(rndRange(1,9),Math.random()<0.2);add(rndRange(1,9),Math.random()<0.5);}
- else if(i<20){let first=rndRange(3,9);total=first;raw.push({sign:'',num:''+first});for(let k=0;k<3;k++)add(rndRange(1,9),Math.random()<0.45);}
- else if(i<30){let first=rndRange(1,9)*10;total=first;raw.push({sign:'',num:''+first});for(let k=0;k<3;k++){let n=rndRange(1,9)*10;let isM=Math.random()<0.45;if(isM){if(n>total)n=rndRange(1,Math.max(1,Math.floor(total/10)))*10;if(n===0)n=10;total-=n;raw.push({sign:'-',num:''+n});}else{total+=n;raw.push({sign:'',num:''+n});}}}
- else if(i<40){let first=rndRange(2,6);total=first;raw.push({sign:'',num:''+first});for(let k=0;k<3;k++)add(rndRange(1,9),Math.random()<0.45);}
- else{let first=rndRange(1,5);total=first;raw.push({sign:'',num:''+first});for(let k=0;k<4;k++)add(rndRange(1,9),Math.random()<0.45);}
- if(total<0)return genL1One(i);return {lines:raw,ans:total,isHorizontal:false};
-}
-function genL2One(i){
- let raw=[],total=0;let pushFirst=(n)=>{total=n;raw.push({sign:'',num:''+n});};let pushNext=(n,isM,isTens)=>{if(isM){if(n>total){n=isTens?rndRange(1,Math.max(1,Math.floor(total/10)))*10:rndRange(1,Math.max(1,total));}if(n===0)n=isTens?10:1;total-=n;raw.push({sign:'-',num:''+n});}else{total+=n;raw.push({sign:'',num:''+n});}};
- if(i<10){pushFirst(rndRange(11,63));pushNext(rndRange(1,9),Math.random()<0.3,false);pushNext(rndRange(1,9),Math.random()<0.6,false);}
- else if(i<20){pushFirst(rndRange(2,9));for(let k=0;k<3;k++)pushNext(rndRange(1,9),Math.random()<0.45,false);}
- else if(i<30){pushFirst(rndRange(19,63));for(let k=0;k<3;k++)pushNext(rndRange(1,9),Math.random()<0.5,false);}
- else if(i<40){pushFirst(rndRange(11,85));for(let k=0;k<3;k++){let isTens=Math.random()<0.4;let n=isTens?rndRange(1,7)*10:rndRange(1,9);pushNext(n,Math.random()<0.45,isTens);}}
- else{pushFirst(rndRange(16,90));for(let k=0;k<4;k++){let isTens=Math.random()<0.35;let n=isTens?rndRange(1,7)*10:rndRange(1,9);pushNext(n,Math.random()<0.45,isTens);}}
- if(total<0)return genL2One(i);return {lines:raw,ans:total,isHorizontal:false};
-}
-function genL3One(i){
- let raw=[],total=0;let pushFirst=(n)=>{total=n;raw.push({sign:'',num:''+n});};let pushNext=(n,isM,isTens)=>{if(isM){if(n>total){n=isTens?rndRange(1,Math.max(1,Math.floor(total/10)))*10:rndRange(1,Math.max(1,total));}if(n===0)n=isTens?10:1;total-=n;raw.push({sign:'-',num:''+n});}else{total+=n;raw.push({sign:'',num:''+n});}};
- if(i<10){pushFirst(rndRange(2,5));pushNext(rndRange(2,5),Math.random()<0.2,false);pushNext(rndRange(1,6),true,false);}
- else if(i<20){pushFirst(rndRange(1,4));for(let k=0;k<3;k++)pushNext(rndRange(1,4),Math.random()<0.45,false);}
- else if(i<30){pushFirst(rndRange(11,92));for(let k=0;k<3;k++)pushNext(rndRange(1,3),Math.random()<0.45,false);}
- else if(i<40){pushFirst(rndRange(2,7)*10);for(let k=0;k<3;k++){let n=rndRange(1,5)*10;pushNext(n,Math.random()<0.5,true);}}
- else{pushFirst(rndRange(1,5));for(let k=0;k<4;k++)pushNext(rndRange(1,5),Math.random()<0.45,false);}
- if(total<0)return genL3One(i);return {lines:raw,ans:total,isHorizontal:false};
-}
-function genOneVertical(level,rows,digits){
- let raw=[],total=0;let maxNum=digits===1?9:99,minNum=digits===1?1:10;let first=rndRange(minNum,maxNum);total=first;raw.push({sign:'',num:''+first});
- for(let i=1;i<rows;i++){let isMinus=Math.random()<0.35;let n=rndRange(minNum,maxNum);if(isMinus){if(n>total)n=rndRange(1,Math.max(1,total));if(n===0)n=1;total-=n;raw.push({sign:'-',num:''+n});}else{total+=n;raw.push({sign:'',num:''+n});}}
- return {lines:raw,ans:total,isHorizontal:false};
-}
-function genQs(level){
- let totalQ=getTotal(level),set=new Set(),arr=[],plan=[];
- if(level==="KID"){let jumbled=shuffleArr(KID_FIXED);return jumbled.map(n=>kidToQ(n));}
- if(level==="LEVEL 1"){for(let i=0;i<50;i++){let q=genL1One(i);let k=JSON.stringify(q.lines);if(set.has(k)){i--;continue;}set.add(k);arr.push(q);}return arr;}
- if(level==="LEVEL 2"){for(let i=0;i<50;i++){let q=genL2One(i);let k=JSON.stringify(q.lines);if(set.has(k)){i--;continue;}set.add(k);arr.push(q);}return arr;}
- if(level==="LEVEL 3"){for(let i=0;i<50;i++){let q=genL3One(i);let k=JSON.stringify(q.lines);if(set.has(k)){i--;continue;}set.add(k);arr.push(q);}return arr;}
- if(level==="LEVEL 4"){for(let i=0;i<100;i++)plan.push('PM');for(let i=0;i<50;i++)plan.push('MULT');}
- else if(level==="LEVEL 5"){for(let i=0;i<100;i++)plan.push('PM');for(let i=0;i<25;i++)plan.push('MULT');for(let i=0;i<25;i++)plan.push('DIV');}
- else{for(let i=0;i<totalQ;i++)plan.push('PM');}
- for(let i=plan.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[plan[i],plan[j]]=[plan[j],plan[i]];}
- for(let p of plan){
-  let q;
-  if(p==='MULT'){if(level==="LEVEL 4"){let a=rndRange(10,99),b=rndRange(2,9);q={lines:[`${a} x ${b}`],ans:a*b,isHorizontal:true};}else{let a=rndRange(100,999),b=rndRange(2,9);q={lines:[`${a} x ${b}`],ans:a*b,isHorizontal:true};}}
-  else if(p==='DIV'){let b=rndRange(2,9),ans=rndRange(11,99),a=b*ans;if(a<100||a>999)continue;q={lines:[`${a} ÷ ${b}`],ans:ans,isHorizontal:true};}
-  else{if(level==="LEVEL 4")q=genOneVertical(level,4,2);else if(level==="LEVEL 5")q=genOneVertical(level,5,2);else q=genOneVertical(level,4,1);}
-  if(!q)continue;let key=JSON.stringify(q.lines);if(set.has(key))continue;set.add(key);arr.push(q);if(arr.length>=totalQ)break;
- }
- while(arr.length<totalQ){arr.push(genOneVertical(level,4,2));}
- return arr;
-}
-function startExam(level){curLevel=level;qs=genQs(level);idx=0;answers={};reviewSet=new Set();left=getTime(level);document.getElementById('loginBox').classList.add('hidden');document.getElementById('levelBox').classList.add('hidden');document.getElementById('examBox').classList.remove('hidden');document.getElementById('secLabel').innerText=level+" ●";document.getElementById('result').innerText="";startCamera();render();startTimer();}
-function startCamera(){let v=document.getElementById('cam');v.style.display="block";document.getElementById('camLabel').style.display="block";if(navigator.mediaDevices)navigator.mediaDevices.getUserMedia({video:true}).then(s=>v.srcObject=s).catch(e=>{});}
-function renderDTP(q){
- if(q.isHorizontal){return `<div class="dtp-h">${q.lines[0]} = ?</div><div style="border-top:2.5px solid #000;margin:8px 0"></div><div class="dtp-h" style="color:#999">?</div>`;}
- let maxW=0;q.lines.forEach(l=>{if(l.num.length>maxW)maxW=l.num.length;});let html=`<table class="dtp-table">`;
- q.lines.forEach(l=>{let padded=l.num.padStart(maxW,' ');html+=`<tr><td><div class="dtp-row"><div class="dtp-cell sign">${l.sign?'-':''}</div>`;for(let ch of padded){if(ch===' ')html+=`<div class="dtp-cell empty"></div>`;else html+=`<div class="dtp-cell">${ch}</div>`;}html+=`</div></td></tr>`;});
- html+=`</table>`;return html;
-}
-function render(){
- document.getElementById('qnums').innerHTML=qs.map((_,i)=>{let cls="";if(reviewSet.has(i))cls="review";else if(answers[i]!=null&&answers[i]!=="")cls="done";return `<div class="${cls} ${i===idx?'now':''}" onclick="goQ(${i})">${i+1}</div>`;}).join('');
- document.getElementById('qNo').innerText="Question No. "+(idx+1);document.getElementById('totalQ').innerText=" / Total: "+qs.length;
- let q=qs[idx];document.getElementById('qbox').className="qbox"+(q.isHorizontal?" horizontal":"");document.getElementById('qtext').innerHTML=renderDTP(q);document.getElementById('ans').value=answers[idx]??"";
- let el=document.querySelectorAll('.qnums div')[idx];if(el)el.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});
-}
-function press(d){let a=document.getElementById('ans');if(a.value.length<5)a.value+=d;}
-function backspace(){let a=document.getElementById('ans');a.value=a.value.slice(0,-1);}
-function clearAns(){document.getElementById('ans').value="";delete answers[idx];render();}
-function goQ(i){saveAns();idx=i;render();}
-function goNext(){saveAns();if(idx<qs.length-1){idx++;render();}}
-function saveAns(){let v=document.getElementById('ans').value.trim();if(v!=="")answers[idx]=v;else delete answers[idx];}
-function saveNext(){saveAns();if(reviewSet.has(idx))reviewSet.delete(idx);if(idx<qs.length-1){idx++;render();}else alert("Last Question - Submit nokkandi!");}
-function markReview(){saveAns();if(reviewSet.has(idx))reviewSet.delete(idx);else reviewSet.add(idx);render();if(idx<qs.length-1){idx++;render();}}
-function startTimer(){clearInterval(timerInt);timerInt=setInterval(()=>{left--;let m=Math.floor(left/60),s=left%60;document.getElementById('timer').innerText=`${m<10?'0':''}${m}:${s<10?'0':''}${s}`;if(left<=0){clearInterval(timerInt);submitExam();}},1000);}
-function submitExam(){saveAns();clearInterval(timerInt);let c=0;qs.forEach((q,i)=>{if(parseInt(answers[i])===q.ans)c++;});document.getElementById('result').innerHTML=`🎉 Result: ${c} / ${qs.length}`;if(confirm(`Submit cheyala? Result: ${c} / ${qs.length}`))alert(`Result: ${c} / ${qs.length}`);}
-function backLevels(){clearInterval(timerInt);document.getElementById('cam').style.display="none";document.getElementById('camLabel').style.display="none";document.getElementById('examBox').classList.add('hidden');document.getElementById('levelBox').classList.remove('hidden');}
-</script></body></html>
+[3,1,-2,4],[4,-2,3,5],[3,-1,-2,6],[5,3,-2,2],[1,5,2,1],[4,-1,-3,6],[6,1,3,-2],[7,2,-5,4],[9,4,-1,2],[3,6,-4,5],
+[5,4,-3,-1],[6,3,-5,2],[9,-5,-1,4],[2,-2,-1,5],[4,-2,-1,6],[9,-5,-2,4],[8,-3,1,2],[1,3,-2,5],[2,2,-4,6],[2,5,-1,3],
+[1,2,-1,5],[3,-2,-1,4],[7,-2,-2,4],[9,4,-5,3],[4,-2,-1,6],[2,5,-5,4],[8,-3,-2,5],[3,5,-3,4],[6,-1,-2,5],[2,5,-2,3],
+[5,2,-3,3],[3,1,-2,6],[1,2,-1,5],[6,3,-2,2],[7,5,-2,2],[6,5,-2,2],[4,2,-2,5],[8,-3,-2,6],[2,7,-5,3],[4,-3,-1,6],
+[1,2,2,-2,5],[3,2
